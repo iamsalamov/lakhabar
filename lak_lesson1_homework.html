@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 1 — Домашнее задание</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  h1 { font-size: 1.4rem; font-weight: bold; margin-bottom: 4px; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 28px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+
+  .instructions { font-size: 0.88rem; color: #444; border-left: 3px solid #ccc; padding: 10px 16px; margin-bottom: 32px; line-height: 1.7; }
+  .instructions strong { color: #111; }
+
+  /* ПРОГРЕСС */
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-bar { height: 3px; background: #e8e8e8; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: #111; transition: width 0.4s ease; }
+  .progress-text { font-size: 0.82rem; color: #888; display: flex; justify-content: space-between; }
+
+  /* КАРТОЧКА */
+  .card-wrap { margin-bottom: 20px; }
+  .card {
+    border: 1px solid #ccc;
+    padding: 40px 32px;
+    text-align: center;
+    cursor: pointer;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s;
+    user-select: none;
+    position: relative;
+  }
+  .card:hover { border-color: #999; }
+  .card-side { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; position: absolute; top: 14px; left: 18px; }
+  .card-word { font-size: 1.6rem; font-weight: bold; line-height: 1.2; }
+  .card-hint { font-size: 0.82rem; color: #bbb; margin-top: 14px; }
+
+  .card-answer { display: none; margin-top: 20px; padding-top: 18px; border-top: 1px solid #e8e8e8; width: 100%; }
+  .card-answer.show { display: block; }
+  .card-answer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 8px; }
+  .card-answer-word { font-size: 1.3rem; font-style: italic; color: #0066cc; }
+
+  /* КНОПКИ */
+  .btn-row { display: flex; gap: 10px; }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    color: #111;
+  }
+  .btn:hover { background: #f5f5f5; }
+  .btn-know { border-color: #111; }
+  .btn-know:hover { background: #111; color: #fff; }
+  .btn-again { color: #888; }
+
+  /* СЧЁТ */
+  .score { font-size: 0.82rem; color: #888; margin-top: 14px; text-align: center; }
+  .score strong { color: #111; }
+
+  /* ФИНИШ */
+  .finish { text-align: center; padding: 40px 20px; display: none; }
+  .finish h2 { font-size: 1.2rem; margin-bottom: 12px; }
+  .finish p { font-size: 0.9rem; color: #555; margin-bottom: 20px; }
+  .finish a { font-size: 0.9rem; }
+
+  /* РЕЖИМ */
+  .mode-row { display: flex; gap: 10px; margin-bottom: 24px; font-size: 0.85rem; }
+  .mode-btn { padding: 6px 16px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-family: Georgia, serif; font-size: 0.85rem; color: #555; }
+  .mode-btn.active { border-color: #111; color: #111; background: #f5f5f5; }
+
+  /* СПИСОК СЛОВ */
+  .wordlist { display: none; }
+  .wordlist.show { display: block; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; padding: 6px 10px; border-bottom: 2px solid #111; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e8e8e8; font-size: 0.93rem; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  h3 { font-size: 0.88rem; font-weight: bold; margin: 24px 0 8px; color: #333; text-transform: uppercase; letter-spacing: 1px; }
+
+  footer { margin-top: 60px; font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e8; padding-top: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Домашнее задание — Урок 1</h1>
+<p class="meta">Лакский язык · Все слова урока · Карточки для повторения</p>
+
+<div class="instructions">
+  <strong>Как заниматься:</strong> Нажмите на карточку, чтобы увидеть перевод. Если слово запомнили — «Знаю», если нет — «Ещё раз». Непонятые слова вернутся в конце стопки. Повторяйте, пока все карточки не перейдут в «Знаю».<br><br>
+  <strong>Совет:</strong> 10–15 минут в день лучше, чем один долгий подход. Занимайтесь каждый день до следующей встречи.
+</div>
+
+<!-- РЕЖИМ -->
+<div class="mode-row">
+  <button class="mode-btn active" id="btn-cards" onclick="setMode('cards')">Карточки</button>
+  <button class="mode-btn" id="btn-list" onclick="setMode('list')">Все слова</button>
+</div>
+
+<!-- КАРТОЧКИ -->
+<div id="cards-view">
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:2%"></div></div>
+    <div class="progress-text">
+      <span id="prog-text">Карточка 1 из 40</span>
+      <span id="prog-know">Знаю: 0</span>
+    </div>
+  </div>
+
+  <div class="card-wrap">
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-side" id="card-side">Русский</div>
+      <div class="card-word" id="card-word">—</div>
+      <div class="card-hint" id="card-hint">нажмите, чтобы увидеть перевод</div>
+      <div class="card-answer" id="card-answer">
+        <div class="card-answer-label">Лакский</div>
+        <div class="card-answer-word" id="card-answer-word">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row" id="btn-row" style="display:none">
+    <button class="btn btn-again" onclick="mark(false)">↩ Ещё раз</button>
+    <button class="btn btn-know" onclick="mark(true)">✓ Знаю</button>
+  </div>
+
+  <div class="score" id="score">Знаю: <strong>0</strong> · Ещё раз: <strong>0</strong></div>
+
+  <div class="finish" id="finish">
+    <h2>Готово!</h2>
+    <p id="finish-text"></p>
+    <a onclick="restart()">Начать заново</a>
+  </div>
+</div>
+
+<!-- СПИСОК ВСЕХ СЛОВ -->
+<div class="wordlist" id="list-view">
+  <h3>Обращения к людям</h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Товарищ</td><td>Гьалмахчу</td></tr>
+    <tr><td>Товарищи</td><td>Гьалмахтал</td></tr>
+    <tr><td>Друзья</td><td>Дустал</td></tr>
+    <tr><td>Дорогой</td><td>Ххирама</td></tr>
+    <tr><td>Дорогая</td><td>Ххирамур</td></tr>
+    <tr><td>Дорогой папа</td><td>Ххирасса ппу</td></tr>
+    <tr><td>Милая мама</td><td>Аьзисса нину</td></tr>
+    <tr><td>Уважаемый</td><td>ХIурмат бума</td></tr>
+    <tr><td>Уважаемая</td><td>ХIурмат бумур</td></tr>
+    <tr><td>Уважаемые товарищи</td><td>ХIурмат бусса гьалмахтал</td></tr>
+    <tr><td>Дорогие друзья</td><td>Ххирасса дустал</td></tr>
+    <tr><td>Мой дорогой…</td><td>Ттул ххирама</td></tr>
+    <tr><td>Моя дорогая…</td><td>Ттул ххирамур</td></tr>
+    <tr><td>Мои дорогие…</td><td>Ттул ххирами</td></tr>
+    <tr><td>Братья</td><td>Уссурвал</td></tr>
+    <tr><td>Сёстры</td><td>Ссурвал</td></tr>
+    <tr><td>Приятели</td><td>Гьалмахтал</td></tr>
+    <tr><td>Эй (к мужчине) простореч.</td><td>Да</td></tr>
+    <tr><td>Эй (к женщине) простореч.</td><td>Ил</td></tr>
+  </tbody></table>
+
+  <h3>Члены семьи</h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Мама</td><td>Дада</td></tr>
+    <tr><td>Папа</td><td>Мямма</td></tr>
+    <tr><td>Отец</td><td>Ппу</td></tr>
+    <tr><td>Мать</td><td>Нину</td></tr>
+    <tr><td>Девочка / Девушка</td><td>Душ</td></tr>
+    <tr><td>Мальчик</td><td>ОьрчI</td></tr>
+    <tr><td>Дети</td><td>ОьрчIру</td></tr>
+    <tr><td>Дядя</td><td>Буттауссу, ниттиуссу</td></tr>
+    <tr><td>Тётя</td><td>Бутталссу, ниттилссу</td></tr>
+    <tr><td>Дядя Али</td><td>Буттауссу Аьли</td></tr>
+    <tr><td>Бабушка</td><td>Мяммал дада, аму</td></tr>
+    <tr><td>Дедушка</td><td>Хъунмямма</td></tr>
+  </tbody></table>
+
+  <h3>Вежливые фразы</h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Извините, вы не скажете…?</td><td>Багъишла итича, зу къабусаннув…?</td></tr>
+    <tr><td>Скажите, если можно…</td><td>Бюхъарчан буси…</td></tr>
+    <tr><td>Можно тебя спросить…?</td><td>БучIирив вихь щуххин…?</td></tr>
+    <tr><td>Можно вас спросить…</td><td>БучIирив зухь щIуххин…?</td></tr>
+    <tr><td>Простите, мне нужен…</td><td>Багъишла ити, ттун аьркинну ур…</td></tr>
+    <tr><td>Простите, мне нужна…</td><td>Багъишла бити, ттун аьркинну бур…</td></tr>
+    <tr><td>Простите, нам нужно…</td><td>Багъишла битияра, жун аьркинни…</td></tr>
+    <tr><td>Простите, мне нужны…</td><td>Миннатри, ттун аьркинни…</td></tr>
+  </tbody></table>
+</div>
+
+<footer>Лакский язык · Урок 1 · Домашнее задание</footer>
+
+<script>
+const words = [
+  {ru:"Товарищ",lak:"Гьалмахчу"},
+  {ru:"Товарищи",lak:"Гьалмахтал"},
+  {ru:"Друзья",lak:"Дустал"},
+  {ru:"Дорогой",lak:"Ххирама"},
+  {ru:"Дорогая",lak:"Ххирамур"},
+  {ru:"Дорогой папа",lak:"Ххирасса ппу"},
+  {ru:"Милая мама",lak:"Аьзисса нину"},
+  {ru:"Уважаемый",lak:"ХIурмат бума"},
+  {ru:"Уважаемая",lak:"ХIурмат бумур"},
+  {ru:"Уважаемые товарищи",lak:"ХIурмат бусса гьалмахтал"},
+  {ru:"Дорогие друзья",lak:"Ххирасса дустал"},
+  {ru:"Мой дорогой…",lak:"Ттул ххирама"},
+  {ru:"Моя дорогая…",lak:"Ттул ххирамур"},
+  {ru:"Мои дорогие…",lak:"Ттул ххирами"},
+  {ru:"Братья",lak:"Уссурвал"},
+  {ru:"Сёстры",lak:"Ссурвал"},
+  {ru:"Приятели",lak:"Гьалмахтал"},
+  {ru:"Эй (к мужчине) простореч.",lak:"Да"},
+  {ru:"Эй (к женщине) простореч.",lak:"Ил"},
+  {ru:"Мама",lak:"Дада"},
+  {ru:"Папа",lak:"Мямма"},
+  {ru:"Отец",lak:"Ппу"},
+  {ru:"Мать",lak:"Нину"},
+  {ru:"Девочка / Девушка",lak:"Душ"},
+  {ru:"Мальчик",lak:"ОьрчI"},
+  {ru:"Дети",lak:"ОьрчIру"},
+  {ru:"Дядя",lak:"Буттауссу, ниттиуссу"},
+  {ru:"Тётя",lak:"Бутталссу, ниттилссу"},
+  {ru:"Дядя Али",lak:"Буттауссу Аьли"},
+  {ru:"Бабушка",lak:"Мяммал дада, аму"},
+  {ru:"Дедушка",lak:"Хъунмямма"},
+  {ru:"Извините, вы не скажете…?",lak:"Багъишла итича, зу къабусаннув…?"},
+  {ru:"Скажите, если можно…",lak:"Бюхъарчан буси…"},
+  {ru:"Можно тебя спросить…?",lak:"БучIирив вихь щуххин…?"},
+  {ru:"Можно вас спросить…",lak:"БучIирив зухь щIуххин…?"},
+  {ru:"Простите, мне нужен…",lak:"Багъишла ити, ттун аьркинну ур…"},
+  {ru:"Простите, мне нужна…",lak:"Багъишла бити, ттун аьркинну бур…"},
+  {ru:"Простите, нам нужно…",lak:"Багъишла битияра, жун аьркинни…"},
+  {ru:"Простите, мне нужны…",lak:"Миннатри, ттун аьркинни…"},
+  {ru:"Товарищ, Сулейманов!",lak:"Гьалмахчу, Сулайманов!"},
+];
+
+let deck = [], again = [], idx = 0, know = 0, rep = 0, revealed = false;
+
+function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+function init() {
+  deck = shuffle([...words]);
+  again = []; idx = 0; know = 0; rep = 0; revealed = false;
+  document.getElementById('finish').style.display = 'none';
+  document.getElementById('card').style.display = 'flex';
+  document.getElementById('btn-row').style.display = 'none';
+  showCard();
+}
+
+function combined() { return [...deck, ...again]; }
+
+function showCard() {
+  const all = combined();
+  if (idx >= all.length) {
+    document.getElementById('card').style.display = 'none';
+    document.getElementById('btn-row').style.display = 'none';
+    const f = document.getElementById('finish');
+    f.style.display = 'block';
+    document.getElementById('finish-text').textContent =
+      know === words.length
+        ? `Отлично — все ${words.length} слов запомнены!`
+        : `Знаете ${know} из ${words.length}. Запустите ещё раз, чтобы повторить остальные.`;
+    return;
+  }
+  revealed = false;
+  const w = all[idx];
+  document.getElementById('card-word').textContent = w.ru;
+  document.getElementById('card-answer-word').textContent = w.lak;
+  document.getElementById('card-answer').classList.remove('show');
+  document.getElementById('card-hint').textContent = 'нажмите, чтобы увидеть перевод';
+  document.getElementById('btn-row').style.display = 'none';
+
+  const total = all.length;
+  const pct = Math.round(((idx + 1) / total) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `Карточка ${idx + 1} из ${total}`;
+  document.getElementById('prog-know').textContent = `Знаю: ${know}`;
+  updateScore();
+}
+
+function reveal() {
+  if (revealed) return;
+  revealed = true;
+  document.getElementById('card-answer').classList.add('show');
+  document.getElementById('card-hint').textContent = '';
+  document.getElementById('btn-row').style.display = 'flex';
+}
+
+function mark(isKnow) {
+  if (isKnow) {
+    know++;
+  } else {
+    rep++;
+    again.push(combined()[idx]);
+  }
+  idx++;
+  showCard();
+}
+
+function updateScore() {
+  document.getElementById('score').innerHTML =
+    `Знаю: <strong>${know}</strong> · Ещё раз: <strong>${rep}</strong>`;
+}
+
+function restart() {
+  document.getElementById('card').style.display = 'flex';
+  init();
+}
+
+function setMode(mode) {
+  document.getElementById('btn-cards').classList.toggle('active', mode === 'cards');
+  document.getElementById('btn-list').classList.toggle('active', mode === 'list');
+  document.getElementById('cards-view').style.display = mode === 'cards' ? 'block' : 'none';
+  document.getElementById('list-view').style.display = mode === 'list' ? 'block' : 'none';
+}
+
+init();
+</script>
+</body>
+</html>
