@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 1 — Занятие</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 40px 0 12px; padding-bottom: 4px; border-bottom: 1px solid #ccc; }
+  h3 { font-size: 0.95rem; font-weight: bold; margin: 24px 0 8px; color: #333; }
+  p { margin-bottom: 10px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 32px; }
+  nav { margin-bottom: 36px; font-size: 0.9rem; }
+  nav a { margin-right: 20px; }
+
+  /* СЛОВАРЬ */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #555; padding: 6px 10px; border-bottom: 2px solid #111; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  td:nth-child(3) { font-size: 0.82rem; color: #666; }
+  tr:hover td { background: #f9f9f9; }
+
+  /* СИТУАЦИИ */
+  .situations { counter-reset: sit; }
+  .sit { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #e8e8e8; }
+  .sit:last-child { border-bottom: none; }
+  .sit-num { counter-increment: sit; font-size: 0.85rem; color: #999; min-width: 28px; padding-top: 2px; }
+  .sit-num::before { content: counter(sit); }
+  .sit-body {}
+  .sit-ru { font-size: 0.95rem; color: #111; margin-bottom: 4px; }
+  .sit-task { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
+  .sit-hint { font-size: 0.82rem; color: #888; font-style: italic; }
+  .sit-key { font-size: 0.82rem; color: #0066cc; margin-top: 4px; cursor: pointer; }
+  .sit-key.hidden { color: transparent; background: #e8e8e8; border-radius: 2px; user-select: none; }
+  .sit-key.hidden::after { content: 'нажмите, чтобы показать'; color: #aaa; font-style: italic; font-size: 0.78rem; }
+
+  /* уровень */
+  .level { display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; padding: 1px 7px; border: 1px solid; margin-left: 8px; vertical-align: middle; }
+  .level-a { color: #888; border-color: #ccc; }
+  .level-b { color: #0066cc; border-color: #99bbee; }
+
+  .note { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; font-size: 0.88rem; color: #444; margin: 16px 0; }
+  .note strong { color: #111; }
+
+  footer { margin-top: 60px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Лакский язык — Урок 1</h1>
+<p class="meta">Обращение и вежливые фразы · Разговорный клуб · Онлайн</p>
+
+<nav>
+  <a href="#vocab">Словарь</a>
+  <a href="#situations">Ситуации для практики</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     СЛОВАРЬ
+═══════════════════════════════════════ -->
+<h2 id="vocab">Словарь</h2>
+
+<div class="note">
+  <strong>О языке.</strong> Лакский — один из государственных языков Дагестана, нахско-дагестанская семья. Около 150 000 носителей. Содержит звуки, которых нет в русском: <strong>хъ</strong> (увулярный), <strong>ч1</strong> (абруптивный), <strong>гь</strong> (фарингальный h). Написание — по учебнику, не меняем.
+</div>
+
+<h3>Обращения к людям</h3>
+<table>
+  <thead><tr><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td>Товарищ</td><td>Гьалмахчу</td><td>к одному</td></tr>
+    <tr><td>Товарищ, Сулейманов!</td><td>Гьалмахчу, Сулайманов!</td><td>с именем</td></tr>
+    <tr><td>Товарищи</td><td>Гьалмахтал</td><td>мн. число</td></tr>
+    <tr><td>Друзья</td><td>Дустал</td><td></td></tr>
+    <tr><td>Дорогой</td><td>Ххирама</td><td>к мужчине</td></tr>
+    <tr><td>Дорогая</td><td>Ххирамур</td><td>к женщине</td></tr>
+    <tr><td>Дорогой папа</td><td>Ххирасса ппу</td><td></td></tr>
+    <tr><td>Милая мама</td><td>Аьзисса нину</td><td></td></tr>
+    <tr><td>Уважаемый</td><td>ХIурмат бума</td><td>официально, к мужчине</td></tr>
+    <tr><td>Уважаемая</td><td>ХIурмат бумур</td><td>официально, к женщине</td></tr>
+    <tr><td>Уважаемые товарищи</td><td>ХIурмат бусса гьалмахтал</td><td></td></tr>
+    <tr><td>Дорогие друзья</td><td>Ххирасса дустал</td><td></td></tr>
+    <tr><td>Мой дорогой…</td><td>Ттул ххирама</td><td></td></tr>
+    <tr><td>Моя дорогая…</td><td>Ттул ххирамур</td><td></td></tr>
+    <tr><td>Мои дорогие…</td><td>Ттул ххирами</td><td>мн. число</td></tr>
+    <tr><td>Братья</td><td>Уссурвал</td><td></td></tr>
+    <tr><td>Сёстры</td><td>Ссурвал</td><td></td></tr>
+    <tr><td>Приятели</td><td>Гьалмахтал</td><td></td></tr>
+    <tr><td>Эй (к мужчине) простореч.</td><td>Да</td><td>неформально</td></tr>
+    <tr><td>Эй (к женщине) простореч.</td><td>Ил</td><td>неформально</td></tr>
+  </tbody>
+</table>
+
+<h3>Члены семьи</h3>
+<table>
+  <thead><tr><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td>Мама</td><td>Дада</td><td></td></tr>
+    <tr><td>Папа</td><td>Мямма</td><td></td></tr>
+    <tr><td>Отец</td><td>Ппу</td><td></td></tr>
+    <tr><td>Мать</td><td>Нину</td><td></td></tr>
+    <tr><td>Девочка / Девушка</td><td>Душ</td><td></td></tr>
+    <tr><td>Мальчик</td><td>ОьрчI</td><td></td></tr>
+    <tr><td>Дети</td><td>ОьрчIру</td><td></td></tr>
+    <tr><td>Дядя</td><td>Буттауссу, ниттиуссу</td><td></td></tr>
+    <tr><td>Тётя</td><td>Бутталссу, ниттилссу</td><td></td></tr>
+    <tr><td>Дядя Али</td><td>Буттауссу Аьли</td><td>с именем</td></tr>
+    <tr><td>Бабушка</td><td>Мяммал дада, аму</td><td></td></tr>
+    <tr><td>Дедушка</td><td>Хъунмямма</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Вежливые фразы — просьба и извинение</h3>
+<table>
+  <thead><tr><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td>Извините, вы не скажете…?</td><td>Багъишла итича, зу къабусаннув…?</td><td>вежливый вопрос к незнакомцу</td></tr>
+    <tr><td>Скажите, если можно…</td><td>Бюхъарчан буси…</td><td></td></tr>
+    <tr><td>Можно тебя спросить…?</td><td>БучIирив вихь щуххин…?</td><td>к одному, на «ты»</td></tr>
+    <tr><td>Можно вас спросить…</td><td>БучIирив зухь щIуххин…?</td><td>вежливо / мн. число</td></tr>
+    <tr><td>Простите, мне нужен…</td><td>Багъишла ити, ттун аьркинну ур…</td><td>о человеке (муж.)</td></tr>
+    <tr><td>Простите, мне нужна…</td><td>Багъишла бити, ттун аьркинну бур…</td><td>о человеке (жен.) или предмет</td></tr>
+    <tr><td>Простите, нам нужно…</td><td>Багъишла битияра, жун аьркинни…</td><td>мн. число</td></tr>
+    <tr><td>Простите, мне нужны…</td><td>Миннатри, ттун аьркинни…</td><td>мн. число предметов</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ
+═══════════════════════════════════════ -->
+<h2 id="situations">Ситуации для практики в сессионных залах</h2>
+
+<div class="note">
+  Каждая ситуация — небольшая ролевая сцена на 2–3 человека. Один участник — «говорящий», остальные реагируют. Ключевые слова скрыты — сначала попробуйте сами, потом нажмите, чтобы проверить. <strong>Цель не перфекция, а попытка.</strong>
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы встретили старого знакомого на улице.</div>
+      <div class="sit-task">Обратитесь к нему тепло — как к дорогому человеку. Потом представьте его третьему участнику.</div>
+      <div class="sit-key">Ттул ххирама / Ттул ххирамур · Гьалмахчу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы пришли на собрание и не знаете, как обратиться к залу.</div>
+      <div class="sit-task">Начните речь — сначала официально, потом более тепло.</div>
+      <div class="sit-key">ХIурмат бусса гьалмахтал · Ххирасса дустал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы опоздали на встречу с другом.</div>
+      <div class="sit-task">Извинитесь, объясните (можно по-русски), попросите помочь.</div>
+      <div class="sit-key">Багъишла итича · БучIирив вихь щуххин…?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы остановили незнакомца на улице, чтобы спросить дорогу.</div>
+      <div class="sit-task">Вежливо обратитесь и задайте вопрос.</div>
+      <div class="sit-key">Багъишла итича, зу къабусаннув…? · Бюхъарчан буси…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы пишете письмо маме издалека.</div>
+      <div class="sit-task">Начните письмо с обращения. Скажите, что скучаете.</div>
+      <div class="sit-key">Аьзисса нину · Дада</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы пишете письмо папе.</div>
+      <div class="sit-task">Начните письмо с тёплого обращения.</div>
+      <div class="sit-key">Ххирасса ппу · Мямма</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">На детской площадке вы хотите подозвать ребёнка.</div>
+      <div class="sit-task">Обратитесь к мальчику, потом к девочке.</div>
+      <div class="sit-key">ОьрчI · Душ</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите познакомить своего дядю с другом.</div>
+      <div class="sit-task">Представьте дядю — сначала просто, потом с именем Али.</div>
+      <div class="sit-key">Буттауссу · Буттауссу Аьли</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужна помощь коллеги, но он занят.</div>
+      <div class="sit-task">Вежливо спросите, можно ли его отвлечь, и скажите, что вам нужно.</div>
+      <div class="sit-key">БучIирив вихь щуххин…? · Багъишла ити, ттун аьркинну ур…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы в магазине, нужна помощь продавца-женщины.</div>
+      <div class="sit-task">Обратитесь вежливо и скажите, что вам нужна какая-то вещь.</div>
+      <div class="sit-key">Багъишла бити, ттун аьркинну бур…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы встречаете группу друзей после долгой разлуки.</div>
+      <div class="sit-task">Обратитесь ко всем сразу — тепло и радостно.</div>
+      <div class="sit-key">Ттул ххирами · Дустал · Гьалмахтал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Нужно обратиться к пожилой женщине, которую вы не знаете.</div>
+      <div class="sit-task">Вежливо попросите её уделить минуту.</div>
+      <div class="sit-key">ХIурмат бумур · БучIирив зухь щIуххин…?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Ваша группа опоздала на мероприятие.</div>
+      <div class="sit-task">Извинитесь перед организатором от имени всех.</div>
+      <div class="sit-key">Багъишла битияра, жун аьркинни…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы ведёте экскурсию для группы детей.</div>
+      <div class="sit-task">Обратитесь к детям, попросите внимания.</div>
+      <div class="sit-key">ОьрчIру · БучIирив вихь щуххин…?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы звоните другу и хотите спросить об одолжении.</div>
+      <div class="sit-task">Начните разговор — поздоровайтесь, скажите что вам кое-что нужно.</div>
+      <div class="sit-key">Гьалмахчу · Миннатри, ттун аьркинни…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы неловко окликнули незнакомца простонародным «эй».</div>
+      <div class="sit-task">Исправьтесь — перефразируйте вежливо.</div>
+      <div class="sit-key">Да / Ил → Багъишла итича, зу къабусаннув…?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы пишете официальное обращение в организацию.</div>
+      <div class="sit-task">Составьте первое предложение письма.</div>
+      <div class="sit-key">ХIурмат бусса гьалмахтал · Бюхъарчан буси…</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите познакомить свою тётю с подругой.</div>
+      <div class="sit-task">Представьте тётю и скажите несколько слов о ней.</div>
+      <div class="sit-key">Бутталссу · Ниттилссу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите обратиться к аудитории братьев и сестёр.</div>
+      <div class="sit-task">Начните выступление — обратитесь ко всем.</div>
+      <div class="sit-key">Уссурвал · Ссурвал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы попали в незнакомую компанию и хотите вежливо спросить, можно ли присоединиться.</div>
+      <div class="sit-task">Обратитесь к группе, извинитесь за беспокойство, спросите разрешения.</div>
+      <div class="sit-key">Багъишла итича · БучIирив зухь щIуххин…? · Гьалмахтал</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Лакский язык · Урок 1 · Материал для онлайн-занятия</footer>
+<script>
+  document.querySelectorAll('.sit-key').forEach(el => {
+    el.classList.add('hidden');
+    el.addEventListener('click', () => el.classList.remove('hidden'));
+  });
+</script>
+</body>
+</html>
