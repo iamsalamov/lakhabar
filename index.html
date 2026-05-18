@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оглавление моих проектов</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin: 10px 0; padding: 10px; background: #f4f4f4; border-radius: 4px; }
+        a { text-decoration: none; color: #0066cc; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>📂 Карта сайта / Оглавление</h1>
+    <hr>
+    
+    <!-- Сюда скрипт будет выводить ссылки -->
+    <ul id="file-list">
+        <li>Загрузка файлов...</li>
+    </ul>
+
+    <script>
+        // Измените эти данные на свои
+        const username = 'iamsalamov';
+        const repo = 'lakhabar';
+
+        async function loadFiles() {
+            try {
+                // Запрашиваем список файлов через публичное API GitHub
+                const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents`);
+                const files = await response.json();
+                const listElement = document.getElementById('file-list');
+                listElement.innerHTML = ''; // Очищаем надпись загрузки
+
+                files.forEach(file => {
+                    // Игнорируем сам index.html, системные файлы и папки типа .github
+                    if (file.name !== 'index.html' && !file.name.startsWith('.')) {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        
+                        // Задаем прямую ссылку на HTML-страницу на GitHub Pages
+                        a.href = `./${file.name}`; 
+                        a.textContent = `📄 ${file.name.replace('.html', '')}`; // Убираем расширение для красоты
+                        
+                        li.appendChild(a);
+                        listElement.appendChild(li);
+                    }
+                });
+            } catch (error) {
+                console.error('Ошибка загрузки файлов:', error);
+                document.getElementById('file-list').innerHTML = '<li>Не удалось загрузить список файлов.</li>';
+            }
+        }
+
+        loadFiles();
+    </script>
+</body>
+</html>
