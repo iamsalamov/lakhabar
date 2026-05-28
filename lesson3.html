@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 3 — Занятие</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 40px 0 12px; padding-bottom: 4px; border-bottom: 1px solid #ccc; }
+  h3 { font-size: 0.95rem; font-weight: bold; margin: 24px 0 8px; color: #333; }
+  p { margin-bottom: 10px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 32px; }
+  nav { margin-bottom: 36px; font-size: 0.9rem; }
+  nav a { margin-right: 20px; }
+
+  /* СЛОВАРЬ */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #555; padding: 6px 10px; border-bottom: 2px solid #111; }
+  th.th-check { width: 36px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  td:nth-child(3) { font-size: 0.82rem; color: #666; }
+  td.td-check { text-align: center; vertical-align: middle; padding: 8px 6px; }
+  tr:hover td { background: #f9f9f9; }
+
+  /* ГАЛОЧКА */
+  .check-btn {
+    width: 22px; height: 22px;
+    border: 1.5px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .check-btn.checked {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+  tr.done td { color: #aaa; }
+  tr.done td:nth-child(2) { color: #bbb; }
+  tr.done .check-btn { background: #111; border-color: #111; color: #fff; }
+
+  /* СИТУАЦИИ */
+  .situations { counter-reset: sit; }
+  .sit { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #e8e8e8; }
+  .sit:last-child { border-bottom: none; }
+  .sit-num { counter-increment: sit; font-size: 0.85rem; color: #999; min-width: 28px; padding-top: 2px; }
+  .sit-num::before { content: counter(sit); }
+  .sit-body {}
+  .sit-ru { font-size: 0.95rem; color: #111; margin-bottom: 4px; }
+  .sit-task { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
+  .sit-hint { font-size: 0.82rem; color: #888; font-style: italic; }
+  .sit-key { font-size: 0.82rem; color: #0066cc; margin-top: 4px; cursor: pointer; }
+  .sit-key.hidden { color: transparent; background: #e8e8e8; border-radius: 2px; user-select: none; }
+  .sit-key.hidden::after { content: 'нажмите, чтобы показать'; color: #aaa; font-style: italic; font-size: 0.78rem; }
+
+  .note { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; font-size: 0.88rem; color: #444; margin: 16px 0; }
+  .note strong { color: #111; }
+
+  /* СЧЁТЧИК ПРОГРЕССА СЛОВАРЯ */
+  .vocab-progress { font-size: 0.82rem; color: #888; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; }
+  .vocab-bar { flex: 1; height: 3px; background: #e8e8e8; }
+  .vocab-bar-fill { height: 100%; background: #111; transition: width 0.3s ease; }
+
+  footer { margin-top: 60px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Лакский язык — Урок 3</h1>
+<p class="meta">Прощание · Разговорный клуб · Онлайн</p>
+
+<nav>
+  <a href="#vocab">Словарь</a>
+  <a href="#vocab-prev">Слова урока 2</a>
+  <a href="#situations">Ситуации — Урок 3</a>
+  <a href="#situations-prev">Ситуации — Урок 2</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     СЛОВАРЬ
+═══════════════════════════════════════ -->
+<h2 id="vocab">Словарь</h2>
+
+<div class="note">
+  <strong>Как работать со словарём.</strong>
+  Перед занятием — просмотрите список, отметьте галочкой слова, которые уже знаете.
+  На занятии — тренируйтесь произносить вслух, преподаватель подскажет правильное произношение.
+  После занятия — снимите все галочки и пройдитесь ещё раз: отмечайте только те слова, которые можете произнести <em>без подглядывания</em>.
+  Цель — чтобы все строки стали отмеченными.
+  Непонятые слова берите в домашнее задание.
+</div>
+
+<div class="vocab-progress">
+  <span id="vocab-count">Отмечено: 0 из <span id="vocab-total">0</span></span>
+  <div class="vocab-bar"><div class="vocab-bar-fill" id="vocab-bar-fill" style="width:0%"></div></div>
+</div>
+
+<h3>Основные слова прощания</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>До свидания</td><td>Цалсса</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Прощай / Прощайте</td><td>Хъинну личIаннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Счастливого пути</td><td>Хьуллухъин, тIайлабацIу баннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Счастливо оставаться</td><td>Хъинну бикIияра (личIаннав)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Будьте здоровы</td><td>IЦуллушиву дулуннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Всего хорошего (мн. ч.)</td><td>Хьуймур хъуннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Всего доброго</td><td>Хъинмур хъуннав</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Договорённости о встрече</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мы ещё увидимся</td><td>Жува ттигу ккакканссару</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не забывай(те) нас</td><td>Жу хъама мабитари</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Приходите (приезжайте) ещё к нам</td><td>Ттигу жучIан бухьхьияра</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Звони(те) нам</td><td>Жуйн оьвчара</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пиши(те) нам письма</td><td>ЖучIан чагъар чичара</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Прощание при уходе</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я пришёл попрощаться с вами</td><td>Зухь барчаллагь учин увкIра</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я пришла попрощаться с вами</td><td>Зухь барчаллагь учин бувкIра</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Передай(те) привет мужу</td><td>Ссалам буси ласнахь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Передай(те) привет жене</td><td>Ссалам буси кулпатрахь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Желаю хорошо добраться домой</td><td>Шавай цIуллу-сагъну ияннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Передайте вашим привет</td><td>Шаппаминнахь ссалам буси</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Спокойной ночи / уходить пора</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спокойной ночи</td><td>Хьхьурду хъинну</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спокойной ночи (ответ)</td><td>КIюрхьил хъинну</td><td>ответная форма</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Добрых вестей</td><td>Хавар хьуйсса баяннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мне пора идти домой (муж.)</td><td>Ттун шавай ачин чIун хъунни</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мне пора идти домой (жен.)</td><td>Ттун шаппай бачин чIун хъунни</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо, меня ждут</td><td>Барчаллагь, ттух ялугьлай буссар</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Ну, мы пошли</td><td>Жу лавгру</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Итоговые фразы прощания</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>До свидания, приходите (приезжайте) к нам ещё</td><td>Барчаллагь, жучIан ттигу бухьхьияра</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо, до свидания</td><td>Барчаллагь цалсса</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо за всё</td><td>Барчаллагь бувмунин</td><td></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СЛОВА ИЗ УРОКА 2
+═══════════════════════════════════════ -->
+<h2 id="vocab-prev">Слова из прошлого урока</h2>
+
+<div class="note">
+  Повторите слова из урока 2 — отмечайте галочкой только то, что помните <em>без подглядывания</em>.
+</div>
+
+<h3>Приветствия</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Здравствуй! Доброе утро! (к муж.)</td><td>Ивзрав</td><td>к одному мужчине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Здравствуй! Доброе утро! (к жен.)</td><td>Бивзрав</td><td>к одной женщине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Здравствуйте</td><td>Бивзрув</td><td>вежливо / мн. число</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мир вашему дому (ответ)</td><td>Ссалам аьлайкум</td><td>ответное приветствие</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Привет</td><td>Ссалам</td><td>неформально</td></tr>
+  </tbody>
+</table>
+
+<h3>С приездом / возвращением</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>С приездом (к муж.)</td><td>Авурав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>С приездом (к жен.)</td><td>Бавурав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>С приездом (мн. ч.)</td><td>Бавуссарув</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>С возвращением (к муж.)</td><td>УвкIрав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Рад застать в здравии (к муж.)</td><td>Ххарира, ина цIуллу-сагъну лявкъуну</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>С возвращением (к жен.)</td><td>Зана хьурав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Рад застать в здравии (к жен.)</td><td>Ххарира, ина цIуллу-сагъну бушивруя</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Радость от встречи</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Очень рад</td><td>Хъинну ххарину ура</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Очень рада</td><td>Хъинну ххарину бура</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>И я рад</td><td>Нагу ххарину ура</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>И я рада</td><td>Нагу ххарину бура</td><td>говорит женщина</td></tr>
+  </tbody>
+</table>
+
+<h3>Как дела / самочувствие</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как себя чувствуете?</td><td>Ина цукун ура? (бура, дура)</td><td>ура — муж., бура — жен., дура — мн. ч.</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как дела?</td><td>Иш цукун бур?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как твои дела?</td><td>Вил иш цукун бур?</td><td>неформально</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо, хорошо</td><td>Барчаллагь, ххуйну бур</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо, неплохо</td><td>Барчаллагь, оьккину бакъар</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как здоровье?</td><td>ЦIуллу-сагъшивrul ци тIар?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Здоровье неплохое</td><td>ЦIуллу-сагъшиву оьккину дакъар</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Новости / семья</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Какие новости?</td><td>Ци хаварду бур?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Новостей нет</td><td>Хаварду бакъар</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Что нового?</td><td>Цусса ци бур?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Ничего нового</td><td>Цусса цичIав бакъар</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как семья?</td><td>Кулпат цукун бур?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как дети?</td><td>ОьрчIру цукун бур?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я рад нашей встрече</td><td>На ххарира жува хьунабакъаврия</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мы тоже рады нашей встрече</td><td>Жугу ххариру жула хьунабакъаврия</td><td></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — УРОК 3
+═══════════════════════════════════════ -->
+<h2 id="situations">Ситуации для практики — Урок 3</h2>
+
+<div class="note">
+  Каждая ситуация — небольшая ролевая сцена на 2–3 человека. Один участник — «говорящий», остальные реагируют. Ключевые слова скрыты — сначала попробуйте сами, потом нажмите, чтобы проверить. <strong>Цель не перфекция, а попытка.</strong>
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите с работы, прощаетесь с коллегой.</div>
+      <div class="sit-task">Скажите «до свидания» и пожелайте всего хорошего.</div>
+      <div class="sit-key">Цалсса · Хъинмур хъуннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Ваш друг уезжает в долгую командировку.</div>
+      <div class="sit-task">Пожелайте ему счастливого пути и скажите, что будете ждать встречи.</div>
+      <div class="sit-key">Хьуллухъин, тIайлабацIу баннав · Жува ттигу ккакканссару</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Гости уходят после визита к вам домой.</div>
+      <div class="sit-task">Попрощайтесь и попросите приходить ещё.</div>
+      <div class="sit-key">Цалсса · Ттигу жучIан бухьхьияра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите от друзей поздно вечером.</div>
+      <div class="sit-task">Скажите «спокойной ночи» и что вам пора домой (вы — мужчина).</div>
+      <div class="sit-key">Хьхьурду хъинну · Ттун шавай ачин чIун хъунни</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Хозяева желают вам «спокойной ночи».</div>
+      <div class="sit-task">Ответьте на пожелание правильной ответной формой.</div>
+      <div class="sit-key">КIюрхьил хъинну</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, уходите с вечеринки. Хотите объяснить, что вас ждут дома.</div>
+      <div class="sit-task">Скажите «спасибо, меня ждут» и что пора уходить.</div>
+      <div class="sit-key">Барчаллагь, ттух ялугьлай буссар · Ттун шаппай бачин чIун хъунни</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы прощаетесь с семьёй друга и хотите передать привет его жене.</div>
+      <div class="sit-task">Попрощайтесь и передайте привет жене.</div>
+      <div class="sit-key">Цалсса · Ссалам буси кулпатрахь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы мужчина, специально пришли попрощаться перед долгой отлучкой.</div>
+      <div class="sit-task">Объясните, зачем пришли.</div>
+      <div class="sit-key">Зухь барчаллагь учин увкIра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы женщина, пришли проститься с соседями перед отъездом.</div>
+      <div class="sit-task">Скажите, что пришли попрощаться.</div>
+      <div class="sit-key">Зухь барчаллагь учин бувкIра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите всей группой после встречи.</div>
+      <div class="sit-task">Попрощайтесь от лица группы — скажите «ну, мы пошли».</div>
+      <div class="sit-key">Жу лавгру · Цалсса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить друга не забывать вас и звонить.</div>
+      <div class="sit-task">Скажите обе фразы.</div>
+      <div class="sit-key">Жу хъама мабитари · Жуйн оьвчара</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Гость уходит, хочет пожелать вам добрых вестей и счастливо оставаться.</div>
+      <div class="sit-task">Скажите обе фразы.</div>
+      <div class="sit-key">Хавар хьуйсса баяннав · Хъинну бикIияра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы прощаетесь после долгого визита и хотите поблагодарить за всё.</div>
+      <div class="sit-task">Скажите «спасибо за всё» и «до свидания».</div>
+      <div class="sit-key">Барчаллагь бувмунин · Цалсса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы провожаете родственника и хотите пожелать ему хорошо добраться домой.</div>
+      <div class="sit-task">Произнесите пожелание.</div>
+      <div class="sit-key">Шавай цIуллу-сагъну ияннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Уходя, вы хотите попросить написать вам письмо и передать привет всем домашним.</div>
+      <div class="sit-task">Скажите обе просьбы.</div>
+      <div class="sit-key">ЖучIан чагъар чичара · Шаппаминнахь ссалам буси</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Хозяин прощается с вами и говорит «приезжайте ещё, спасибо».</div>
+      <div class="sit-task">Ответьте «спасибо, до свидания».</div>
+      <div class="sit-key">Барчаллагь цалсса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пожелать всем «будьте здоровы» перед расставанием.</div>
+      <div class="sit-task">Произнесите пожелание.</div>
+      <div class="sit-key">IЦуллушиву дулуннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы прощаетесь с подругой и передаёте привет её мужу.</div>
+      <div class="sit-task">Скажите «до свидания» и попросите передать привет мужу.</div>
+      <div class="sit-key">Цалсса · Ссалам буси ласнахь</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — ПОВТОРЕНИЕ УРОК 2
+═══════════════════════════════════════ -->
+<h2 id="situations-prev">Ситуации для повторения — Урок 2</h2>
+
+<div class="note">
+  Повторите ситуации из прошлого урока. Используйте слова урока 2 — они уже знакомы, теперь потренируйтесь применять их свободно.
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Утром вы встречаете коллегу-мужчину и хотите поздороваться по-лакски.</div>
+      <div class="sit-task">Поздоровайтесь правильной формой.</div>
+      <div class="sit-key">Ивзрав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Друг вернулся из длительной поездки.</div>
+      <div class="sit-task">Поздоровайтесь с приездом и скажите, что очень рады (вы — мужчина).</div>
+      <div class="sit-key">Авурав · УвкIрав · Хъинну ххарину ура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Знакомый говорит «Ссалам». Ответьте.</div>
+      <div class="sit-task">Используйте правильную ответную форму.</div>
+      <div class="sit-key">Ссалам аьлайкум</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас спрашивают «как дела?» — хотите ответить нейтрально.</div>
+      <div class="sit-task">Ответьте и задайте встречный вопрос.</div>
+      <div class="sit-key">Барчаллагь, оьккину бакъар · Вил иш цукун бур?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы встречаете старого друга после долгой разлуки.</div>
+      <div class="sit-task">Скажите, что очень рады встрече. Друг ответит, что и он тоже рад.</div>
+      <div class="sit-key">На ххарира жува хьунабакъаврия · Жугу ххариру жула хьунабакъаврия</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Спрашивают о здоровье. Ответьте, что неплохое, и спросите про новости.</div>
+      <div class="sit-task">Два ответа подряд.</div>
+      <div class="sit-key">ЦIуллу-сагъшиву оьккину дакъар · Ци хаварду бур?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас спрашивают про новости. Новостей нет.</div>
+      <div class="sit-task">Ответьте и спросите про семью собеседника.</div>
+      <div class="sit-key">Хаварду бакъар · Кулпат цукун бур?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите поздороваться с группой людей официально и спросить, как все себя чувствуют.</div>
+      <div class="sit-task">Поздоровайтесь — и задайте вопрос во множественном числе.</div>
+      <div class="sit-key">Бивзрув · Ина цукун дура?</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Лакский язык · Урок 3 · Материал для онлайн-занятия</footer>
+
+<script>
+  // Скрыть ключи ситуаций
+  document.querySelectorAll('.sit-key').forEach(el => {
+    el.classList.add('hidden');
+    el.addEventListener('click', () => el.classList.remove('hidden'));
+  });
+
+  // Галочки
+  const allChecks = document.querySelectorAll('.check-btn');
+  const total = allChecks.length;
+  document.getElementById('vocab-total').textContent = total;
+
+  function updateVocabProgress() {
+    const checked = document.querySelectorAll('.check-btn.checked').length;
+    document.getElementById('vocab-count').textContent = `Отмечено: ${checked} из ${total}`;
+    const pct = total ? Math.round((checked / total) * 100) : 0;
+    document.getElementById('vocab-bar-fill').style.width = pct + '%';
+  }
+
+  function toggleCheck(btn) {
+    btn.classList.toggle('checked');
+    const row = btn.closest('tr');
+    if (row) row.classList.toggle('done', btn.classList.contains('checked'));
+    updateVocabProgress();
+  }
+
+  updateVocabProgress();
+</script>
+</body>
+</html>
