@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 4 — Занятие</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 40px 0 12px; padding-bottom: 4px; border-bottom: 1px solid #ccc; }
+  h3 { font-size: 0.95rem; font-weight: bold; margin: 24px 0 8px; color: #333; }
+  p { margin-bottom: 10px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 32px; }
+  nav { margin-bottom: 36px; font-size: 0.9rem; }
+  nav a { margin-right: 20px; }
+
+  /* СЛОВАРЬ */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #555; padding: 6px 10px; border-bottom: 2px solid #111; }
+  th.th-check { width: 36px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  td:nth-child(3) { font-size: 0.82rem; color: #666; }
+  td.td-check { text-align: center; vertical-align: middle; padding: 8px 6px; }
+  tr:hover td { background: #f9f9f9; }
+
+  /* ГАЛОЧКА */
+  .check-btn {
+    width: 22px; height: 22px;
+    border: 1.5px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .check-btn.checked {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+  tr.done td { color: #aaa; }
+  tr.done td:nth-child(2) { color: #bbb; }
+  tr.done .check-btn { background: #111; border-color: #111; color: #fff; }
+
+  /* СИТУАЦИИ */
+  .situations { counter-reset: sit; }
+  .sit { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #e8e8e8; }
+  .sit:last-child { border-bottom: none; }
+  .sit-num { counter-increment: sit; font-size: 0.85rem; color: #999; min-width: 28px; padding-top: 2px; }
+  .sit-num::before { content: counter(sit); }
+  .sit-body {}
+  .sit-ru { font-size: 0.95rem; color: #111; margin-bottom: 4px; }
+  .sit-task { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
+  .sit-hint { font-size: 0.82rem; color: #888; font-style: italic; }
+  .sit-key { font-size: 0.82rem; color: #0066cc; margin-top: 4px; cursor: pointer; }
+  .sit-key.hidden { color: transparent; background: #e8e8e8; border-radius: 2px; user-select: none; }
+  .sit-key.hidden::after { content: 'нажмите, чтобы показать'; color: #aaa; font-style: italic; font-size: 0.78rem; }
+
+  .note { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; font-size: 0.88rem; color: #444; margin: 16px 0; }
+  .note strong { color: #111; }
+
+  /* СЧЁТЧИК ПРОГРЕССА СЛОВАРЯ */
+  .vocab-progress { font-size: 0.82rem; color: #888; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; }
+  .vocab-bar { flex: 1; height: 3px; background: #e8e8e8; }
+  .vocab-bar-fill { height: 100%; background: #111; transition: width 0.3s ease; }
+
+  footer { margin-top: 60px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Лакский язык — Урок 4</h1>
+<p class="meta">Просьба · Разговорный клуб · Онлайн</p>
+
+<nav>
+  <a href="#vocab">Словарь</a>
+  <a href="#vocab-prev">Слова урока 3</a>
+  <a href="#situations">Ситуации — Урок 4</a>
+  <a href="#situations-prev">Ситуации — Урок 3</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     СЛОВАРЬ
+═══════════════════════════════════════ -->
+<h2 id="vocab">Словарь</h2>
+
+<div class="note">
+  <strong>Как работать со словарём.</strong>
+  Перед занятием — просмотрите список, отметьте галочкой слова, которые уже знаете.
+  На занятии — тренируйтесь произносить вслух, преподаватель подскажет правильное произношение.
+  После занятия — снимите все галочки и пройдитесь ещё раз: отмечайте только те слова, которые можете произнести <em>без подглядывания</em>.
+  Цель — чтобы все строки стали отмеченными.
+  Непонятые слова берите в домашнее задание.
+</div>
+
+<div class="vocab-progress">
+  <span id="vocab-count">Отмечено: 0 из <span id="vocab-total">0</span></span>
+  <div class="vocab-bar"><div class="vocab-bar-fill" id="vocab-bar-fill" style="width:0%"></div></div>
+</div>
+
+<h3>Основные слова просьбы</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>У меня к тебе просьба…</td><td>Ттул вихь миннатри</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Небольшая просьба…</td><td>ЧIивисса миннат</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пожалуйста (просьба)</td><td>Миннатри</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Прошу …</td><td>Миннатри</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я выполню вашу (твою) просьбу</td><td>На вил миннат щаллу буллай ура</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>К сожалению, я не могу выполнить вашу (твою) просьбу</td><td>Вил миннат щаллу бан бюхълай бакъар</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Вежливые обращения с просьбой</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Скажи(те), если можно</td><td>Бюхъарчан буси</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Объясни(те), если можно</td><td>Бюхъарчан бувчIин ба</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Повтори(те), если не трудно</td><td>Гикрал ба захIмат къахьурча</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Если можно, …</td><td>Бюхъарчан</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Переведите, …</td><td>Гаржума ба</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Напишите, …</td><td>Чича</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Дайте, …</td><td>Дула (була, ула)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Помогите, …</td><td>Кумаг ба</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Вопросы и уточнения</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Где находится…?</td><td>Чув буссар? (уссар, дуссар)</td><td>буссар — для людей, уссар — для предметов муж., дуссар — для предметов жен.</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Можно спросить?</td><td>БучIирив цIуххин</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не смогли бы вы …?</td><td>Вища къабюхъанссарив?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Прошу вас (тебя) …</td><td>Миннатри вихь (зухь)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не могли бы вы (ты) мне помочь?</td><td>Ттун кумаг бан къахьунссарив?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Можно мне попросить вас (тебя) об одном одолжении?</td><td>БучIирив вихь ца зат ба учин?</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Разрешения и просьбы войти / сесть</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне войти (муж.)</td><td>Уххан ихтияр дула</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне войти (жен.)</td><td>Буххан ихтияр дула</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне сесть (муж.)</td><td>ЩяикIан ихтияр дула</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне сесть (жен.)</td><td>ЩябикIан ихтияр дула</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне спросить</td><td>ЦIуххин ихтияр дула</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне взглянуть</td><td>Урган бучIирив</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне узнать</td><td>КIул бан бучIирив</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне выйти (муж.)</td><td>Уккан ихтияр дула</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разреши(те) мне выйти (жен.)</td><td>Буккан бучIирив</td><td>говорит женщина</td></tr>
+  </tbody>
+</table>
+
+<h3>Просьба подождать / потерпеть</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Прошу, подожди меня здесь (к муж.)</td><td>Миннатри, ттух шикку ялугьлагьу</td><td>к мужчине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Подожди(те) меня … (муж.)</td><td>На учIаннин ацIу</td><td>к мужчине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Подожди(те) меня … (жен.)</td><td>На бучIаннин бацIу</td><td>к женщине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Погоди(те) немного, …</td><td>Ссавур да чансса</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Если можно, потерпи(те) немного</td><td>Бюхъарча чансса яхI ба</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Если можно, подожди(те)</td><td>Бюхъарча чансса хIаллай ацIу</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Просьба проводить / отвезти</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Просьба к тебе: пойдём со мной (с нами) (к муж.)</td><td>Вихь миннатри, бачу жущал</td><td>к мужчине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Просьба к тебе: пойдём со мной (с нами) (к жен.)</td><td>Вихь миннатри, ачу жущал (ттущал)</td><td>к женщине</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Можно мне посидеть с вами (тобой)? (муж.)</td><td>Вищал щяикIан бучIирив?</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Можно мне посидеть с вами (тобой)? (жен.)</td><td>Вищал щябикIан бучIирив?</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Если можно, проводите меня (жен.)</td><td>На тIайла букки бюхъарча</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не могли бы вы (ты) отвезти (отвести) меня в..? (муж.)</td><td>На биян бан бюхъанссарив?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не могли бы вы (ты) отвезти (отвести) меня в..? (жен.)</td><td>На иян ан бюхъанссарив?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Отведите (отвезите) меня, пожалуйста, … (муж.)</td><td>Миннатри, на биян ба</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Отведите (отвезите) меня, пожалуйста, … (жен.)</td><td>Тавакъюри, на иян аву</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Отказ и сожаление</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>К сожалению, у меня нет возможности…</td><td>ТтучIа мув каши дакъар / Ттуша мув зат щаллу бан хъанай бакъар</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не мешайте мне, …</td><td>Ттухун бахмачиларду</td><td></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СЛОВА ИЗ УРОКА 3
+═══════════════════════════════════════ -->
+<h2 id="vocab-prev">Слова из прошлого урока</h2>
+
+<div class="note">
+  Повторите слова из урока 3 — отмечайте галочкой только то, что помните <em>без подглядывания</em>.
+</div>
+
+<h3>Основные слова прощания</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>До свидания</td><td>Цалсса</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Прощай / Прощайте</td><td>Хъинну личIаннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Счастливого пути</td><td>Хьуллухъин, тIайлабацIу баннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Счастливо оставаться</td><td>Хъинну бикIияра (личIаннав)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Будьте здоровы</td><td>IЦуллушиву дулуннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Всего хорошего</td><td>Хъинмур хъуннав</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Договорённости о встрече</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мы ещё увидимся</td><td>Жува ттигу ккакканссару</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не забывай(те) нас</td><td>Жу хъама мабитари</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Приходите ещё к нам</td><td>Ттигу жучIан бухьхьияра</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Звони(те) нам</td><td>Жуйн оьвчара</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пиши(те) нам письма</td><td>ЖучIан чагъар чичара</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Прощание при уходе</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я пришёл попрощаться с вами</td><td>Зухь барчаллагь учин увкIра</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я пришла попрощаться с вами</td><td>Зухь барчаллагь учин бувкIра</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Передай(те) привет мужу</td><td>Ссалам буси ласнахь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Передай(те) привет жене</td><td>Ссалам буси кулпатрахь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Желаю хорошо добраться домой</td><td>Шавай цIуллу-сагъну ияннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Ну, мы пошли</td><td>Жу лавгру</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спокойной ночи</td><td>Хьхьурду хъинну</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спокойной ночи (ответ)</td><td>КIюрхьил хъинну</td><td>ответная форма</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мне пора идти домой (муж.)</td><td>Ттун шавай ачин чIун хъунни</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мне пора идти домой (жен.)</td><td>Ттун шаппай бачин чIун хъунни</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо, меня ждут</td><td>Барчаллагь, ттух ялугьлай буссар</td><td></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — УРОК 4
+═══════════════════════════════════════ -->
+<h2 id="situations">Ситуации для практики — Урок 4</h2>
+
+<div class="note">
+  Каждая ситуация — небольшая ролевая сцена на 2–3 человека. Один участник — «говорящий», остальные реагируют. Ключевые слова скрыты — сначала попробуйте сами, потом нажмите, чтобы проверить. <strong>Цель не перфекция, а попытка.</strong>
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите спросить дорогу у прохожего.</div>
+      <div class="sit-task">Вежливо попросите разрешения задать вопрос.</div>
+      <div class="sit-key">БучIирив цIуххин</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы не поняли объяснение на лакском языке.</div>
+      <div class="sit-task">Попросите повторить, если не трудно.</div>
+      <div class="sit-key">Гикрал ба захIмат къахьурча</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужно узнать, где находится аптека.</div>
+      <div class="sit-task">Спросите, где находится нужное место.</div>
+      <div class="sit-key">Чув буссар? (уссар, дуссар)</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, входите в комнату, где сидят люди.</div>
+      <div class="sit-task">Попросите разрешения войти.</div>
+      <div class="sit-key">Буххан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина, хотите сесть рядом с собеседником.</div>
+      <div class="sit-task">Попросите разрешения сесть.</div>
+      <div class="sit-key">ЩяикIан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы слышали слово, но не знаете его значения. Хотите попросить объяснить.</div>
+      <div class="sit-task">Вежливо попросите объяснить, если можно.</div>
+      <div class="sit-key">Бюхъарчан бувчIин ба</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужно выйти ненадолго во время встречи. Вы — мужчина.</div>
+      <div class="sit-task">Попросите разрешения выйти.</div>
+      <div class="sit-key">Уккан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы просите друга (мужчину) подождать вас здесь.</div>
+      <div class="sit-task">Попросите подождать — вежливая форма с «пожалуйста».</div>
+      <div class="sit-key">Миннатри, ттух шикку ялугьлагьу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы торопитесь, просите немного подождать.</div>
+      <div class="sit-task">Скажите «погодите немного».</div>
+      <div class="sit-key">Ссавур да чансса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить коллегу помочь вам.</div>
+      <div class="sit-task">Скажите «у меня к тебе просьба» и попросите помочь.</div>
+      <div class="sit-key">Ттул вихь миннатри · Кумаг ба</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас попросили о чём-то, но у вас нет возможности выполнить просьбу.</div>
+      <div class="sit-task">Вежливо откажите.</div>
+      <div class="sit-key">ТтучIа мув каши дакъар</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Собеседник говорит что-то по-лакски, и вы хотите попросить перевести.</div>
+      <div class="sit-task">Попросите перевести, если можно.</div>
+      <div class="sit-key">Бюхъарчан · Гаржума ба</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужна небольшая помощь. Хотите сначала вежливо спросить, можно ли обратиться.</div>
+      <div class="sit-task">Скажите «небольшая просьба» и попросите помочь.</div>
+      <div class="sit-key">ЧIивисса миннат · Кумаг ба</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы готовы выполнить чужую просьбу и хотите об этом сказать.</div>
+      <div class="sit-task">Скажите, что выполните просьбу.</div>
+      <div class="sit-key">На вил миннат щаллу буллай ура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, хотите попросить проводить вас.</div>
+      <div class="sit-task">Вежливо попросите проводить вас, если можно.</div>
+      <div class="sit-key">На тIайла букки бюхъарча</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина, хотите попросить разрешения войти к старшему родственнику.</div>
+      <div class="sit-task">Попросите разрешения войти.</div>
+      <div class="sit-key">Уххан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, хотите попросить разрешения сесть во время визита.</div>
+      <div class="sit-task">Попросите разрешения сесть.</div>
+      <div class="sit-key">ЩябикIан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите кое-что уточнить у собеседника, прежде чем задать вопрос.</div>
+      <div class="sit-task">Спросите разрешения узнать.</div>
+      <div class="sit-key">КIул бан бучIирив</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Собеседник показал вам книгу. Вы хотите посмотреть её.</div>
+      <div class="sit-task">Попросите разрешения взглянуть.</div>
+      <div class="sit-key">Урган бучIирив</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить кого-то пойти с вами (обращаетесь к мужчине).</div>
+      <div class="sit-task">Скажите «просьба: пойдём со мной».</div>
+      <div class="sit-key">Вихь миннатри, бачу жущал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить женщину пойти вместе с вами.</div>
+      <div class="sit-task">Скажите «просьба: пойдём со мной» (обращение к женщине).</div>
+      <div class="sit-key">Вихь миннатри, ачу жущал (ттущал)</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужно, чтобы вас отвезли куда-то. Вы — мужчина.</div>
+      <div class="sit-task">Вежливо спросите, не смогут ли вас отвезти.</div>
+      <div class="sit-key">На биян бан бюхъанссарив?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, просите отвезти вас. Хотите сформулировать как просьбу.</div>
+      <div class="sit-task">Попросите отвезти вас — с «пожалуйста».</div>
+      <div class="sit-key">Тавакъюри, на иян аву</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам мешают сосредоточиться. Хотите вежливо попросить не мешать.</div>
+      <div class="sit-task">Попросите не мешать вам.</div>
+      <div class="sit-key">Ттухун бахмачиларду</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить написать слово — вы его не знаете, как пишется.</div>
+      <div class="sit-task">Попросите написать.</div>
+      <div class="sit-key">Чича</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам нужно, чтобы вам что-то дали. Просьба адресована одному человеку.</div>
+      <div class="sit-task">Попросите дать (муж. форма).</div>
+      <div class="sit-key">Дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы просите подождать вас — обращаетесь к женщине.</div>
+      <div class="sit-task">Скажите «подожди меня» (к женщине).</div>
+      <div class="sit-key">На бучIаннин бацIу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы просите подождать вас — обращаетесь к мужчине.</div>
+      <div class="sit-task">Скажите «подожди меня» (к мужчине).</div>
+      <div class="sit-key">На учIаннин ацIу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Собеседник нервничает и торопится. Вы просите его немного потерпеть.</div>
+      <div class="sit-task">Скажите «если можно, потерпите немного».</div>
+      <div class="sit-key">Бюхъарча чансса яхI ба</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить разрешения присоединиться к мужчине.</div>
+      <div class="sit-task">Спросите, можно ли вам посидеть рядом (вы — мужчина).</div>
+      <div class="sit-key">Вищал щяикIан бучIирив?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите сказать, что с радостью поможете — и собеседник просил об этом.</div>
+      <div class="sit-task">Скажите «я выполню твою просьбу».</div>
+      <div class="sit-key">На вил миннат щаллу буллай ура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина, хотите попросить разрешения выйти из комнаты.</div>
+      <div class="sit-task">Попросите разрешения выйти.</div>
+      <div class="sit-key">Уккан ихтияр дула</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы ведёте занятие и просите всех немного подождать, пока вы готовитесь.</div>
+      <div class="sit-task">Попросите подождать немного.</div>
+      <div class="sit-key">Бюхъарча чансса хIаллай ацIу</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — УРОК 3 (повторение)
+═══════════════════════════════════════ -->
+<h2 id="situations-prev">Ситуации — Урок 3 (повторение)</h2>
+
+<div class="note">
+  Повторите ситуации из прошлого урока — используйте их как разминку в начале занятия.
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите с работы, прощаетесь с коллегой.</div>
+      <div class="sit-task">Скажите «до свидания» и пожелайте всего хорошего.</div>
+      <div class="sit-key">Цалсса · Хъинмур хъуннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Ваш друг уезжает в долгую командировку.</div>
+      <div class="sit-task">Пожелайте ему счастливого пути и скажите, что ещё увидитесь.</div>
+      <div class="sit-key">Хьуллухъин, тIайлабацIу баннав · Жува ттигу ккакканссару</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите от друзей поздно вечером. Вы — мужчина.</div>
+      <div class="sit-task">Скажите «спокойной ночи» и что вам пора домой.</div>
+      <div class="sit-key">Хьхьурду хъинну · Ттун шавай ачин чIун хъунни</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Хозяева желают вам «спокойной ночи».</div>
+      <div class="sit-task">Ответьте на пожелание правильной ответной формой.</div>
+      <div class="sit-key">КIюрхьил хъинну</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, уходите с вечеринки. Хотите объяснить, что вас ждут дома.</div>
+      <div class="sit-task">Скажите «спасибо, меня ждут» и что пора уходить.</div>
+      <div class="sit-key">Барчаллагь, ттух ялугьлай буссар · Ттун шаппай бачин чIун хъунни</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Гости уходят после визита к вам домой.</div>
+      <div class="sit-task">Попрощайтесь и попросите приходить ещё.</div>
+      <div class="sit-key">Цалсса · Ттигу жучIан бухьхьияра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы уходите всей группой после встречи.</div>
+      <div class="sit-task">Попрощайтесь от лица группы — скажите «ну, мы пошли».</div>
+      <div class="sit-key">Жу лавгру · Цалсса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина, специально пришли попрощаться перед долгой отлучкой.</div>
+      <div class="sit-task">Объясните, зачем пришли.</div>
+      <div class="sit-key">Зухь барчаллагь учин увкIра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, пришли проститься с соседями перед отъездом.</div>
+      <div class="sit-task">Скажите, что пришли попрощаться.</div>
+      <div class="sit-key">Зухь барчаллагь учин бувкIра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы прощаетесь с семьёй друга и хотите передать привет его жене.</div>
+      <div class="sit-task">Попрощайтесь и передайте привет жене.</div>
+      <div class="sit-key">Цалсса · Ссалам буси кулпатрахь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Провожаете друга и хотите передать привет его мужу.</div>
+      <div class="sit-task">Скажите «передай привет мужу».</div>
+      <div class="sit-key">Ссалам буси ласнахь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Друг уезжает домой из вашего города.</div>
+      <div class="sit-task">Пожелайте ему хорошо добраться домой.</div>
+      <div class="sit-key">Шавай цIуллу-сагъну ияннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы заканчиваете звонок с другом — хотите попросить его не забывать вас.</div>
+      <div class="sit-task">Попросите не забывать и звонить.</div>
+      <div class="sit-key">Жу хъама мабитари · Жуйн оьвчара</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы прощаетесь после приятной встречи. Хотите поблагодарить за всё.</div>
+      <div class="sit-task">Скажите «спасибо за всё» и «до свидания».</div>
+      <div class="sit-key">Барчаллагь бувмунин · Цалсса</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите попросить гостей, уходя, приезжать ещё и писать письма.</div>
+      <div class="sit-task">Попросите приезжать ещё и писать.</div>
+      <div class="sit-key">Ттигу жучIан бухьхьияра · ЖучIан чагъар чичара</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Лакский язык · Урок 4 · Материал для онлайн-занятия</footer>
+
+<script>
+  // Скрыть ключи ситуаций
+  document.querySelectorAll('.sit-key').forEach(el => {
+    el.classList.add('hidden');
+    el.addEventListener('click', () => el.classList.remove('hidden'));
+  });
+
+  // Галочки
+  const allChecks = document.querySelectorAll('.check-btn');
+  const total = allChecks.length;
+  document.getElementById('vocab-total').textContent = total;
+
+  function updateVocabProgress() {
+    const checked = document.querySelectorAll('.check-btn.checked').length;
+    document.getElementById('vocab-count').textContent = `Отмечено: ${checked} из ${total}`;
+    const pct = total ? Math.round((checked / total) * 100) : 0;
+    document.getElementById('vocab-bar-fill').style.width = pct + '%';
+  }
+
+  function toggleCheck(btn) {
+    btn.classList.toggle('checked');
+    const row = btn.closest('tr');
+    if (row) row.classList.toggle('done', btn.classList.contains('checked'));
+    updateVocabProgress();
+  }
+
+  updateVocabProgress();
+</script>
+</body>
+</html>

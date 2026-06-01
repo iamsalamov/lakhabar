@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 4 — Домашнее задание</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  h1 { font-size: 1.4rem; font-weight: bold; margin-bottom: 4px; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 28px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+
+  .instructions { font-size: 0.88rem; color: #444; border-left: 3px solid #ccc; padding: 10px 16px; margin-bottom: 32px; line-height: 1.7; }
+  .instructions strong { color: #111; }
+
+  /* ПРОГРЕСС */
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-bar { height: 3px; background: #e8e8e8; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: #111; transition: width 0.4s ease; }
+  .progress-text { font-size: 0.82rem; color: #888; display: flex; justify-content: space-between; }
+
+  /* КАРТОЧКА */
+  .card-wrap { margin-bottom: 20px; }
+  .card {
+    border: 1px solid #ccc;
+    padding: 40px 32px;
+    text-align: center;
+    cursor: pointer;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s;
+    user-select: none;
+    position: relative;
+  }
+  .card:hover { border-color: #999; }
+  .card-side { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; position: absolute; top: 14px; left: 18px; }
+  .card-lesson { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #ccc; position: absolute; top: 14px; right: 18px; }
+  .card-word { font-size: 1.6rem; font-weight: bold; line-height: 1.2; }
+  .card-hint { font-size: 0.82rem; color: #bbb; margin-top: 14px; }
+
+  .card-answer { display: none; margin-top: 20px; padding-top: 18px; border-top: 1px solid #e8e8e8; width: 100%; }
+  .card-answer.show { display: block; }
+  .card-answer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #aaa; margin-bottom: 8px; }
+  .card-answer-word { font-size: 1.3rem; font-style: italic; color: #0066cc; }
+
+  /* КНОПКИ */
+  .btn-row { display: flex; gap: 10px; }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    color: #111;
+  }
+  .btn:hover { background: #f5f5f5; }
+  .btn-know { border-color: #111; }
+  .btn-know:hover { background: #111; color: #fff; }
+  .btn-again { color: #888; }
+
+  /* СЧЁТ */
+  .score { font-size: 0.82rem; color: #888; margin-top: 14px; text-align: center; }
+  .score strong { color: #111; }
+
+  /* ФИНИШ */
+  .finish { text-align: center; padding: 40px 20px; display: none; }
+  .finish h2 { font-size: 1.2rem; margin-bottom: 12px; }
+  .finish p { font-size: 0.9rem; color: #555; margin-bottom: 20px; }
+  .finish a { font-size: 0.9rem; }
+
+  /* РЕЖИМ */
+  .mode-row { display: flex; gap: 10px; margin-bottom: 24px; font-size: 0.85rem; }
+  .mode-btn { padding: 6px 16px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-family: Georgia, serif; font-size: 0.85rem; color: #555; }
+  .mode-btn.active { border-color: #111; color: #111; background: #f5f5f5; }
+
+  /* ФИЛЬТР УРОКОВ */
+  .filter-row { display: flex; gap: 8px; margin-bottom: 20px; font-size: 0.82rem; flex-wrap: wrap; }
+  .filter-btn { padding: 4px 14px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-family: Georgia, serif; font-size: 0.82rem; color: #888; border-radius: 2px; }
+  .filter-btn.active { border-color: #111; color: #111; background: #f5f5f5; }
+
+  /* СПИСОК СЛОВ */
+  .wordlist { display: none; }
+  .wordlist.show { display: block; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; padding: 6px 10px; border-bottom: 2px solid #111; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e8e8e8; font-size: 0.93rem; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  h3 { font-size: 0.88rem; font-weight: bold; margin: 24px 0 8px; color: #333; text-transform: uppercase; letter-spacing: 1px; }
+
+  .lesson-tag { display: inline-block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #ddd; color: #bbb; padding: 0 5px; margin-left: 6px; vertical-align: middle; border-radius: 2px; }
+  .lesson-tag.new { border-color: #99bbee; color: #0066cc; }
+
+  footer { margin-top: 60px; font-size: 0.78rem; color: #bbb; border-top: 1px solid #e8e8e8; padding-top: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Домашнее задание — Урок 4</h1>
+<p class="meta">Лакский язык · Слова уроков 3 и 4 · Карточки для повторения</p>
+
+<div class="instructions">
+  <strong>Как заниматься:</strong> Нажмите на карточку, чтобы увидеть перевод. Если слово запомнили — «Знаю», если нет — «Ещё раз». Непонятые слова вернутся в конце стопки. Повторяйте, пока все карточки не перейдут в «Знаю».<br><br>
+  <strong>Совет:</strong> 10–15 минут в день лучше, чем один долгий подход. Занимайтесь каждый день до следующей встречи.
+</div>
+
+<!-- РЕЖИМ -->
+<div class="mode-row">
+  <button class="mode-btn active" id="btn-cards" onclick="setMode('cards')">Карточки</button>
+  <button class="mode-btn" id="btn-list" onclick="setMode('list')">Все слова</button>
+</div>
+
+<!-- КАРТОЧКИ -->
+<div id="cards-view">
+
+  <!-- ФИЛЬТР -->
+  <div class="filter-row">
+    <span style="font-size:0.82rem;color:#888;padding:4px 0;">Показывать:</span>
+    <button class="filter-btn active" id="f-all" onclick="setFilter('all')">Все</button>
+    <button class="filter-btn" id="f-4" onclick="setFilter('4')">Только урок 4</button>
+    <button class="filter-btn" id="f-3" onclick="setFilter('3')">Только урок 3</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:2%"></div></div>
+    <div class="progress-text">
+      <span id="prog-text">Карточка 1 из —</span>
+      <span id="prog-know">Знаю: 0</span>
+    </div>
+  </div>
+
+  <div class="card-wrap">
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-side" id="card-side">Русский</div>
+      <div class="card-lesson" id="card-lesson"></div>
+      <div class="card-word" id="card-word">—</div>
+      <div class="card-hint" id="card-hint">нажмите, чтобы увидеть перевод</div>
+      <div class="card-answer" id="card-answer">
+        <div class="card-answer-label">Лакский</div>
+        <div class="card-answer-word" id="card-answer-word">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row" id="btn-row" style="display:none">
+    <button class="btn btn-again" onclick="mark(false)">↩ Ещё раз</button>
+    <button class="btn btn-know" onclick="mark(true)">✓ Знаю</button>
+  </div>
+
+  <div class="score" id="score">Знаю: <strong>0</strong> · Ещё раз: <strong>0</strong></div>
+
+  <div class="finish" id="finish">
+    <h2>Готово!</h2>
+    <p id="finish-text"></p>
+    <a onclick="restart()">Начать заново</a>
+  </div>
+</div>
+
+<!-- СПИСОК ВСЕХ СЛОВ -->
+<div class="wordlist" id="list-view">
+
+  <h3>Урок 4 — Основные слова просьбы <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>У меня к тебе просьба…</td><td>Ттул вихь миннатри</td></tr>
+    <tr><td>Небольшая просьба…</td><td>ЧIивисса миннат</td></tr>
+    <tr><td>Пожалуйста (просьба)</td><td>Миннатри</td></tr>
+    <tr><td>Прошу …</td><td>Миннатри</td></tr>
+    <tr><td>Я выполню вашу (твою) просьбу</td><td>На вил миннат щаллу буллай ура</td></tr>
+    <tr><td>К сожалению, я не могу выполнить вашу (твою) просьбу</td><td>Вил миннат щаллу бан бюхълай бакъар</td></tr>
+  </tbody></table>
+
+  <h3>Урок 4 — Вежливые обращения с просьбой <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Скажи(те), если можно</td><td>Бюхъарчан буси</td></tr>
+    <tr><td>Объясни(те), если можно</td><td>Бюхъарчан бувчIин ба</td></tr>
+    <tr><td>Повтори(те), если не трудно</td><td>Гикрал ба захIмат къахьурча</td></tr>
+    <tr><td>Если можно, …</td><td>Бюхъарчан</td></tr>
+    <tr><td>Переведите, …</td><td>Гаржума ба</td></tr>
+    <tr><td>Напишите, …</td><td>Чича</td></tr>
+    <tr><td>Дайте, …</td><td>Дула (була, ула)</td></tr>
+    <tr><td>Помогите, …</td><td>Кумаг ба</td></tr>
+  </tbody></table>
+
+  <h3>Урок 4 — Вопросы и уточнения <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Где находится…?</td><td>Чув буссар? (уссар, дуссар)</td></tr>
+    <tr><td>Можно спросить?</td><td>БучIирив цIуххин</td></tr>
+    <tr><td>Не смогли бы вы …?</td><td>Вища къабюхъанссарив?</td></tr>
+    <tr><td>Прошу вас (тебя) …</td><td>Миннатри вихь (зухь)</td></tr>
+    <tr><td>Не могли бы вы (ты) мне помочь?</td><td>Ттун кумаг бан къахьунссарив?</td></tr>
+    <tr><td>Можно мне попросить вас об одном одолжении?</td><td>БучIирив вихь ца зат ба учин?</td></tr>
+  </tbody></table>
+
+  <h3>Урок 4 — Разрешения <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Разреши(те) мне войти (муж.)</td><td>Уххан ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне войти (жен.)</td><td>Буххан ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне сесть (муж.)</td><td>ЩяикIан ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне сесть (жен.)</td><td>ЩябикIан ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне спросить</td><td>ЦIуххин ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне взглянуть</td><td>Урган бучIирив</td></tr>
+    <tr><td>Разреши(те) мне узнать</td><td>КIул бан бучIирив</td></tr>
+    <tr><td>Разреши(те) мне выйти (муж.)</td><td>Уккан ихтияр дула</td></tr>
+    <tr><td>Разреши(те) мне выйти (жен.)</td><td>Буккан бучIирив</td></tr>
+  </tbody></table>
+
+  <h3>Урок 4 — Просьба подождать <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Прошу, подожди меня здесь (к муж.)</td><td>Миннатри, ттух шикку ялугьлагьу</td></tr>
+    <tr><td>Подожди(те) меня … (муж.)</td><td>На учIаннин ацIу</td></tr>
+    <tr><td>Подожди(те) меня … (жен.)</td><td>На бучIаннин бацIу</td></tr>
+    <tr><td>Погоди(те) немного, …</td><td>Ссавур да чансса</td></tr>
+    <tr><td>Если можно, потерпи(те) немного</td><td>Бюхъарча чансса яхI ба</td></tr>
+    <tr><td>Если можно, подожди(те)</td><td>Бюхъарча чансса хIаллай ацIу</td></tr>
+  </tbody></table>
+
+  <h3>Урок 4 — Просьба проводить / отвезти <span class="lesson-tag new">Урок 4</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>Просьба к тебе: пойдём со мной (к муж.)</td><td>Вихь миннатри, бачу жущал</td></tr>
+    <tr><td>Просьба к тебе: пойдём со мной (к жен.)</td><td>Вихь миннатри, ачу жущал (ттущал)</td></tr>
+    <tr><td>Можно мне посидеть с вами? (муж.)</td><td>Вищал щяикIан бучIирив?</td></tr>
+    <tr><td>Можно мне посидеть с вами? (жен.)</td><td>Вищал щябикIан бучIирив?</td></tr>
+    <tr><td>Если можно, проводите меня (жен.)</td><td>На тIайла букки бюхъарча</td></tr>
+    <tr><td>Не могли бы вы отвезти меня? (муж.)</td><td>На биян бан бюхъанссарив?</td></tr>
+    <tr><td>Не могли бы вы отвезти меня? (жен.)</td><td>На иян ан бюхъанссарив?</td></tr>
+    <tr><td>Отведите меня, пожалуйста … (муж.)</td><td>Миннатри, на биян ба</td></tr>
+    <tr><td>Отведите меня, пожалуйста … (жен.)</td><td>Тавакъюри, на иян аву</td></tr>
+    <tr><td>К сожалению, у меня нет возможности…</td><td>ТтучIа мув каши дакъар</td></tr>
+    <tr><td>Не мешайте мне, …</td><td>Ттухун бахмачиларду</td></tr>
+  </tbody></table>
+
+  <h3>Урок 3 — Основные слова прощания <span class="lesson-tag">Урок 3</span></h3>
+  <table><thead><tr><th>Русский</th><th>Лакский</th></tr></thead><tbody>
+    <tr><td>До свидания</td><td>Цалсса</td></tr>
+    <tr><td>Прощай / Прощайте</td><td>Хъинну личIаннав</td></tr>
+    <tr><td>Счастливого пути</td><td>Хьуллухъин, тIайлабацIу баннав</td></tr>
+    <tr><td>Счастливо оставаться</td><td>Хъинну бикIияра (личIаннав)</td></tr>
+    <tr><td>Будьте здоровы</td><td>IЦуллушиву дулуннав</td></tr>
+    <tr><td>Всего хорошего</td><td>Хъинмур хъуннав</td></tr>
+    <tr><td>Мы ещё увидимся</td><td>Жува ттигу ккакканссару</td></tr>
+    <tr><td>Не забывай(те) нас</td><td>Жу хъама мабитари</td></tr>
+    <tr><td>Приходите ещё к нам</td><td>Ттигу жучIан бухьхьияра</td></tr>
+    <tr><td>Звони(те) нам</td><td>Жуйн оьвчара</td></tr>
+    <tr><td>Пиши(те) нам письма</td><td>ЖучIан чагъар чичара</td></tr>
+    <tr><td>Я пришёл попрощаться с вами</td><td>Зухь барчаллагь учин увкIра</td></tr>
+    <tr><td>Я пришла попрощаться с вами</td><td>Зухь барчаллагь учин бувкIра</td></tr>
+    <tr><td>Передай(те) привет мужу</td><td>Ссалам буси ласнахь</td></tr>
+    <tr><td>Передай(те) привет жене</td><td>Ссалам буси кулпатрахь</td></tr>
+    <tr><td>Желаю хорошо добраться домой</td><td>Шавай цIуллу-сагъну ияннав</td></tr>
+    <tr><td>Спокойной ночи</td><td>Хьхьурду хъинну</td></tr>
+    <tr><td>Спокойной ночи (ответ)</td><td>КIюрхьил хъинну</td></tr>
+    <tr><td>Мне пора идти домой (муж.)</td><td>Ттун шавай ачин чIун хъунни</td></tr>
+    <tr><td>Мне пора идти домой (жен.)</td><td>Ттун шаппай бачин чIун хъунни</td></tr>
+    <tr><td>Спасибо, меня ждут</td><td>Барчаллагь, ттух ялугьлай буссар</td></tr>
+    <tr><td>Ну, мы пошли</td><td>Жу лавгру</td></tr>
+    <tr><td>Спасибо, до свидания</td><td>Барчаллагь цалсса</td></tr>
+    <tr><td>Спасибо за всё</td><td>Барчаллагь бувмунин</td></tr>
+  </tbody></table>
+
+</div>
+
+<footer>Лакский язык · Урок 4 · Домашнее задание</footer>
+
+<script>
+const words = [
+  // ── Урок 4 ──
+  {ru:"У меня к тебе просьба…", lak:"Ттул вихь миннатри", lesson:4},
+  {ru:"Небольшая просьба…", lak:"ЧIивисса миннат", lesson:4},
+  {ru:"Пожалуйста (просьба)", lak:"Миннатри", lesson:4},
+  {ru:"Я выполню вашу (твою) просьбу", lak:"На вил миннат щаллу буллай ура", lesson:4},
+  {ru:"К сожалению, я не могу выполнить просьбу", lak:"Вил миннат щаллу бан бюхълай бакъар", lesson:4},
+  {ru:"Скажи(те), если можно", lak:"Бюхъарчан буси", lesson:4},
+  {ru:"Объясни(те), если можно", lak:"Бюхъарчан бувчIин ба", lesson:4},
+  {ru:"Повтори(те), если не трудно", lak:"Гикрал ба захIмат къахьурча", lesson:4},
+  {ru:"Если можно, …", lak:"Бюхъарчан", lesson:4},
+  {ru:"Переведите, …", lak:"Гаржума ба", lesson:4},
+  {ru:"Напишите, …", lak:"Чича", lesson:4},
+  {ru:"Дайте, …", lak:"Дула (була, ула)", lesson:4},
+  {ru:"Помогите, …", lak:"Кумаг ба", lesson:4},
+  {ru:"Где находится…?", lak:"Чув буссар? (уссар, дуссар)", lesson:4},
+  {ru:"Можно спросить?", lak:"БучIирив цIуххин", lesson:4},
+  {ru:"Не смогли бы вы …?", lak:"Вища къабюхъанссарив?", lesson:4},
+  {ru:"Прошу вас (тебя) …", lak:"Миннатри вихь (зухь)", lesson:4},
+  {ru:"Не могли бы вы мне помочь?", lak:"Ттун кумаг бан къахьунссарив?", lesson:4},
+  {ru:"Можно попросить об одном одолжении?", lak:"БучIирив вихь ца зат ба учин?", lesson:4},
+  {ru:"Разреши(те) мне войти (муж.)", lak:"Уххан ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне войти (жен.)", lak:"Буххан ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне сесть (муж.)", lak:"ЩяикIан ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне сесть (жен.)", lak:"ЩябикIан ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне спросить", lak:"ЦIуххин ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне взглянуть", lak:"Урган бучIирив", lesson:4},
+  {ru:"Разреши(те) мне узнать", lak:"КIул бан бучIирив", lesson:4},
+  {ru:"Разреши(те) мне выйти (муж.)", lak:"Уккан ихтияр дула", lesson:4},
+  {ru:"Разреши(те) мне выйти (жен.)", lak:"Буккан бучIирив", lesson:4},
+  {ru:"Прошу, подожди меня здесь (к муж.)", lak:"Миннатри, ттух шикку ялугьлагьу", lesson:4},
+  {ru:"Подожди(те) меня … (муж.)", lak:"На учIаннин ацIу", lesson:4},
+  {ru:"Подожди(те) меня … (жен.)", lak:"На бучIаннин бацIу", lesson:4},
+  {ru:"Погоди(те) немного, …", lak:"Ссавур да чансса", lesson:4},
+  {ru:"Если можно, потерпи(те) немного", lak:"Бюхъарча чансса яхI ба", lesson:4},
+  {ru:"Если можно, подожди(те)", lak:"Бюхъарча чансса хIаллай ацIу", lesson:4},
+  {ru:"Просьба: пойдём со мной (к муж.)", lak:"Вихь миннатри, бачу жущал", lesson:4},
+  {ru:"Просьба: пойдём со мной (к жен.)", lak:"Вихь миннатри, ачу жущал (ттущал)", lesson:4},
+  {ru:"Можно мне посидеть с вами? (муж.)", lak:"Вищал щяикIан бучIирив?", lesson:4},
+  {ru:"Можно мне посидеть с вами? (жен.)", lak:"Вищал щябикIан бучIирив?", lesson:4},
+  {ru:"Если можно, проводите меня (жен.)", lak:"На тIайла букки бюхъарча", lesson:4},
+  {ru:"Не могли бы вы отвезти меня? (муж.)", lak:"На биян бан бюхъанссарив?", lesson:4},
+  {ru:"Не могли бы вы отвезти меня? (жен.)", lak:"На иян ан бюхъанссарив?", lesson:4},
+  {ru:"Отведите меня, пожалуйста … (муж.)", lak:"Миннатри, на биян ба", lesson:4},
+  {ru:"Отведите меня, пожалуйста … (жен.)", lak:"Тавакъюри, на иян аву", lesson:4},
+  {ru:"К сожалению, у меня нет возможности…", lak:"ТтучIа мув каши дакъар", lesson:4},
+  {ru:"Не мешайте мне, …", lak:"Ттухун бахмачиларду", lesson:4},
+  // ── Урок 3 ──
+  {ru:"До свидания", lak:"Цалсса", lesson:3},
+  {ru:"Прощай / Прощайте", lak:"Хъинну личIаннав", lesson:3},
+  {ru:"Счастливого пути", lak:"Хьуллухъин, тIайлабацIу баннав", lesson:3},
+  {ru:"Счастливо оставаться", lak:"Хъинну бикIияра (личIаннав)", lesson:3},
+  {ru:"Будьте здоровы", lak:"IЦуллушиву дулуннав", lesson:3},
+  {ru:"Всего хорошего", lak:"Хъинмур хъуннав", lesson:3},
+  {ru:"Мы ещё увидимся", lak:"Жува ттигу ккакканссару", lesson:3},
+  {ru:"Не забывай(те) нас", lak:"Жу хъама мабитари", lesson:3},
+  {ru:"Приходите ещё к нам", lak:"Ттигу жучIан бухьхьияра", lesson:3},
+  {ru:"Звони(те) нам", lak:"Жуйн оьвчара", lesson:3},
+  {ru:"Пиши(те) нам письма", lak:"ЖучIан чагъар чичара", lesson:3},
+  {ru:"Я пришёл попрощаться с вами", lak:"Зухь барчаллагь учин увкIра", lesson:3},
+  {ru:"Я пришла попрощаться с вами", lak:"Зухь барчаллагь учин бувкIра", lesson:3},
+  {ru:"Передай(те) привет мужу", lak:"Ссалам буси ласнахь", lesson:3},
+  {ru:"Передай(те) привет жене", lak:"Ссалам буси кулпатрахь", lesson:3},
+  {ru:"Желаю хорошо добраться домой", lak:"Шавай цIуллу-сагъну ияннав", lesson:3},
+  {ru:"Спокойной ночи", lak:"Хьхьурду хъинну", lesson:3},
+  {ru:"Спокойной ночи (ответ)", lak:"КIюрхьил хъинну", lesson:3},
+  {ru:"Мне пора идти домой (муж.)", lak:"Ттун шавай ачин чIун хъунни", lesson:3},
+  {ru:"Мне пора идти домой (жен.)", lak:"Ттун шаппай бачин чIун хъунни", lesson:3},
+  {ru:"Спасибо, меня ждут", lak:"Барчаллагь, ттух ялугьлай буссар", lesson:3},
+  {ru:"Ну, мы пошли", lak:"Жу лавгру", lesson:3},
+  {ru:"Спасибо, до свидания", lak:"Барчаллагь цалсса", lesson:3},
+  {ru:"Спасибо за всё", lak:"Барчаллагь бувмунин", lesson:3},
+];
+
+let currentFilter = 'all';
+let deck = [], again = [], idx = 0, know = 0, rep = 0, revealed = false;
+
+function getFilteredWords() {
+  if (currentFilter === 'all') return words;
+  return words.filter(w => w.lesson === parseInt(currentFilter));
+}
+
+function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+function init() {
+  deck = shuffle([...getFilteredWords()]);
+  again = []; idx = 0; know = 0; rep = 0; revealed = false;
+  document.getElementById('finish').style.display = 'none';
+  document.getElementById('card').style.display = 'flex';
+  document.getElementById('btn-row').style.display = 'none';
+  showCard();
+}
+
+function combined() { return [...deck, ...again]; }
+
+function showCard() {
+  const all = combined();
+  if (idx >= all.length) {
+    document.getElementById('card').style.display = 'none';
+    document.getElementById('btn-row').style.display = 'none';
+    const f = document.getElementById('finish');
+    f.style.display = 'block';
+    const total = getFilteredWords().length;
+    document.getElementById('finish-text').textContent =
+      know === total
+        ? `Отлично — все ${total} слов запомнены!`
+        : `Знаете ${know} из ${total}. Запустите ещё раз, чтобы повторить остальные.`;
+    return;
+  }
+  revealed = false;
+  const w = all[idx];
+  document.getElementById('card-word').textContent = w.ru;
+  document.getElementById('card-answer-word').textContent = w.lak;
+  document.getElementById('card-lesson').textContent = `Урок ${w.lesson}`;
+  document.getElementById('card-answer').classList.remove('show');
+  document.getElementById('card-hint').textContent = 'нажмите, чтобы увидеть перевод';
+  document.getElementById('btn-row').style.display = 'none';
+
+  const total = all.length;
+  const pct = Math.round(((idx + 1) / total) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `Карточка ${idx + 1} из ${total}`;
+  document.getElementById('prog-know').textContent = `Знаю: ${know}`;
+  updateScore();
+}
+
+function reveal() {
+  if (revealed) return;
+  revealed = true;
+  document.getElementById('card-answer').classList.add('show');
+  document.getElementById('card-hint').textContent = '';
+  document.getElementById('btn-row').style.display = 'flex';
+}
+
+function mark(isKnow) {
+  if (isKnow) {
+    know++;
+  } else {
+    rep++;
+    again.push(combined()[idx]);
+  }
+  idx++;
+  showCard();
+}
+
+function updateScore() {
+  document.getElementById('score').innerHTML =
+    `Знаю: <strong>${know}</strong> · Ещё раз: <strong>${rep}</strong>`;
+}
+
+function restart() {
+  document.getElementById('card').style.display = 'flex';
+  init();
+}
+
+function setMode(mode) {
+  document.getElementById('btn-cards').classList.toggle('active', mode === 'cards');
+  document.getElementById('btn-list').classList.toggle('active', mode === 'list');
+  document.getElementById('cards-view').style.display = mode === 'cards' ? 'block' : 'none';
+  document.getElementById('list-view').classList.toggle('show', mode === 'list');
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  ['all','4','3'].forEach(id => {
+    document.getElementById('f-' + id).classList.toggle('active', id === f);
+  });
+  init();
+}
+
+init();
+</script>
+</body>
+</html>
