@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Урок 6 — Занятие</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 40px 0 12px; padding-bottom: 4px; border-bottom: 1px solid #ccc; }
+  h3 { font-size: 0.95rem; font-weight: bold; margin: 24px 0 8px; color: #333; }
+  p { margin-bottom: 10px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 32px; }
+  nav { margin-bottom: 36px; font-size: 0.9rem; }
+  nav a { margin-right: 20px; }
+
+  /* СЛОВАРЬ */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #555; padding: 6px 10px; border-bottom: 2px solid #111; }
+  th.th-check { width: 36px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  td:nth-child(2) { font-style: italic; }
+  td:nth-child(3) { font-size: 0.82rem; color: #666; }
+  td.td-check { text-align: center; vertical-align: middle; padding: 8px 6px; }
+  tr:hover td { background: #f9f9f9; }
+
+  /* ГАЛОЧКА */
+  .check-btn {
+    width: 22px; height: 22px;
+    border: 1.5px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .check-btn.checked {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+  tr.done td { color: #aaa; }
+  tr.done td:nth-child(2) { color: #bbb; }
+  tr.done .check-btn { background: #111; border-color: #111; color: #fff; }
+
+  /* СИТУАЦИИ */
+  .situations { counter-reset: sit; }
+  .sit { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #e8e8e8; }
+  .sit:last-child { border-bottom: none; }
+  .sit-num { counter-increment: sit; font-size: 0.85rem; color: #999; min-width: 28px; padding-top: 2px; }
+  .sit-num::before { content: counter(sit); }
+  .sit-body {}
+  .sit-ru { font-size: 0.95rem; color: #111; margin-bottom: 4px; }
+  .sit-task { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
+  .sit-hint { font-size: 0.82rem; color: #888; font-style: italic; }
+  .sit-key { font-size: 0.82rem; color: #0066cc; margin-top: 4px; cursor: pointer; }
+  .sit-key.hidden { color: transparent; background: #e8e8e8; border-radius: 2px; user-select: none; }
+  .sit-key.hidden::after { content: 'нажмите, чтобы показать'; color: #aaa; font-style: italic; font-size: 0.78rem; }
+
+  .note { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; font-size: 0.88rem; color: #444; margin: 16px 0; }
+  .note strong { color: #111; }
+
+  /* СЧЁТЧИК ПРОГРЕССА СЛОВАРЯ */
+  .vocab-progress { font-size: 0.82rem; color: #888; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; }
+  .vocab-bar { flex: 1; height: 3px; background: #e8e8e8; }
+  .vocab-bar-fill { height: 100%; background: #111; transition: width 0.3s ease; }
+
+  footer { margin-top: 60px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Лакский язык — Урок 6 · Приглашение</h1>
+<p class="meta">Приглашение · Разговорный клуб · Онлайн</p>
+
+<nav>
+  <a href="#vocab">Словарь</a>
+  <a href="#vocab-prev">Слова урока 5</a>
+  <a href="#situations">Ситуации — Урок 6</a>
+  <a href="#situations-prev">Ситуации — Урок 5</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     СЛОВАРЬ
+═══════════════════════════════════════ -->
+<h2 id="vocab">Словарь</h2>
+
+<div class="note">
+  <strong>Как работать со словарём.</strong>
+  Перед занятием — просмотрите список, отметьте галочкой слова, которые уже знаете.
+  На занятии — тренируйтесь произносить вслух, преподаватель подскажет правильное произношение.
+  После занятия — снимите все галочки и пройдитесь ещё раз: отмечайте только те слова, которые можете произнести <em>без подглядывания</em>.
+  Цель — чтобы все строки стали отмеченными.
+  Непонятые слова берите в домашнее задание.
+</div>
+
+<div class="vocab-progress">
+  <span id="vocab-count">Отмечено: 0 из <span id="vocab-total">0</span></span>
+  <div class="vocab-bar"><div class="vocab-bar-fill" id="vocab-bar-fill" style="width:0%"></div></div>
+</div>
+
+<h3>Слова приглашения — войти, сесть, подойти</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Входите, заходите</td><td>Ухху, бухху, духху, буххийяра</td><td>разные формы в зависимости от пола и числа</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Садитесь</td><td>ЩябикIи</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Проходите</td><td>Бухьхьи</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Подойдите ближе</td><td>Шинай гъан хьу; шинмай хьийяра</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Подвиньтесь</td><td>Тинмай хьийяра</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Разрешите пригласить</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Разрешите мне пригласить вас (тебя)…</td><td>Ихтияр дулара, ттухьхьун ихтияр дула, жухьхьун</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Я приглашаю вас … (муж.)</td><td>На оьвтIий ура (бура, дура)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Мы приглашаем вас …</td><td>Жу оьвтIий буру зуйн</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не хотите ли вы …?</td><td>Вин ччайвагу бакъарив?</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Не можете ли вы …?</td><td>Зуща бюхъанссарив?</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Пойдёмте в гости, на прогулку, в кафе</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте в гости</td><td>Хъамалу бачи (ачу, бачу, дачу)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте в лес</td><td>ВацIлувун бачи (ачу, бачу, дачу)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте на озеро</td><td>Бярув бачи (ачу, бачу, дачу)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте к Сулейману</td><td>Бачи СулаймануннучIан (ачу, бачу, дачу)</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте со мной</td><td>Бачияра ттущал</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте к нам</td><td>Бачияра жучIан</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пойдёмте погуляем</td><td>Бачияра къатIуппай гьаннуча</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Зайдёмте в кафе</td><td>Кафелувун бухханну?</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Пригласить на танец, приходить, отказать</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Приглашаю на танец (к женщине)</td><td>Ттущал къавтIун бизу</td><td>говорит мужчина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Приглашаю на танец (к мужчине)</td><td>Ттущал къавтIун изу</td><td>говорит женщина</td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пригласи(те) его</td><td>Ганайнгу оьвчара</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Пригласи(те) её</td><td>Ганийнгу оьвчара</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Приходите к нам завтра</td><td>Гьунтттий жучIан бухьхьийяра</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>К сожалению, я не могу</td><td>Багъишла бити, къабюхъанссар</td><td>вежливый отказ</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СЛОВА ИЗ УРОКА 5
+═══════════════════════════════════════ -->
+<h2 id="vocab-prev">Слова из прошлого урока</h2>
+
+<div class="note">
+  Повторите слова из урока 5 — отмечайте галочкой только то, что помните <em>без подглядывания</em>.
+</div>
+
+<h3>Благодарность и радость</h3>
+<table>
+  <thead><tr><th class="th-check"></th><th>Русский</th><th>Лакский</th><th>Заметка</th></tr></thead>
+  <tbody>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо</td><td>Барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>И вам (тебе) спасибо (ответ)</td><td>Вингу (зунгу) барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Большое спасибо</td><td>Вингу хъунмасса барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Благодарю от всего сердца</td><td>ДакIнихтуну барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо за приглашение</td><td>Оьвчаврийн барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Спасибо за помощь</td><td>Кумагран барчаллагь</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как я рад (муж.)</td><td>На хъинну ххарину ура</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как я рада (жен.)</td><td>На хъинну ххарину бура</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Как приятно</td><td>Хъинну тIааьнну бур</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Счастья тебе (вам)</td><td>Вин талихI булуннав</td><td></td></tr>
+    <tr><td class="td-check"><span class="check-btn" onclick="toggleCheck(this)">✓</span></td><td>Радости тебе</td><td>Ххаришиву вин</td><td></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — УРОК 6
+═══════════════════════════════════════ -->
+<h2 id="situations">Ситуации для практики — Урок 6</h2>
+
+<div class="note">
+  Каждая ситуация — небольшая ролевая сцена на 2–3 человека. Один участник — «говорящий», остальные реагируют. Ключевые слова скрыты — сначала попробуйте сами, потом нажмите, чтобы проверить. <strong>Цель не перфекция, а попытка.</strong>
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы открываете дверь гостю. Хотите пригласить его войти.</div>
+      <div class="sit-task">Скажите «входите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ухху / Бухху</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Гость зашёл. Вы хотите предложить ему сесть.</div>
+      <div class="sit-task">Скажите «садитесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ЩяикIи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Гость задержался у порога. Вы хотите предложить ему пройти внутрь.</div>
+      <div class="sit-task">Скажите «проходите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ухху</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Собеседник стоит далеко. Вы хотите попросить его подойти ближе.</div>
+      <div class="sit-task">Скажите «подойдите ближе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Шинай гъан хьу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">На скамейке тесно. Вы просите соседа немного подвинуться.</div>
+      <div class="sit-task">Скажите «подвиньтесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Тинмай хьийяра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пригласить приятеля в гости к себе.</div>
+      <div class="sit-task">Скажите «пойдёмте в гости».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъамалу бачи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы зовёте друзей на прогулку в лес.</div>
+      <div class="sit-task">Скажите «пойдёмте в лес».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ВацIлувун бачи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пригласить подругу прогуляться вместе.</div>
+      <div class="sit-task">Скажите «пойдёмте погуляем».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачияра къатIуппай гьаннуча</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы приглашаете коллег зайти в кафе.</div>
+      <div class="sit-task">Скажите «зайдёмте в кафе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Кафелувун бухханну?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пригласить человека пойти с вами.</div>
+      <div class="sit-task">Скажите «пойдёмте со мной».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачияра ттущал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пригласить гостей к себе домой.</div>
+      <div class="sit-task">Скажите «пойдёмте к нам».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачияра жучIан</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы зовёте друга искупаться на озере.</div>
+      <div class="sit-task">Скажите «пойдёмте на озеро».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бярув бачи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите вежливо пригласить гостя, спросив разрешения.</div>
+      <div class="sit-task">Скажите «разрешите мне пригласить вас».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ихтияр дула, ттухьхьун</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина, приглашаете на танец женщину.</div>
+      <div class="sit-task">Скажите «приглашаю на танец» (к женщине).</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ттущал къавтIун бизу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина, приглашаете на танец мужчину.</div>
+      <div class="sit-task">Скажите «приглашаю на танец» (к мужчине).</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ттущал къавтIун изу</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите предложить другу пойти к Сулейману вместе.</div>
+      <div class="sit-task">Скажите «пойдёмте к Сулейману».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачи СулаймануннучIан</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы приглашаете группу от своего имени.</div>
+      <div class="sit-task">Скажите «я приглашаю вас».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На оьвтIий ура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы приглашаете от имени группы, семьи или команды.</div>
+      <div class="sit-task">Скажите «мы приглашаем вас».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Жу оьвтIий буру зуйн</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите мягко узнать, не хочет ли человек присоединиться.</div>
+      <div class="sit-task">Спросите «не хотите ли вы …?»</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вин ччайвагу бакъарив?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите мягко выяснить, сможет ли человек прийти.</div>
+      <div class="sit-task">Спросите «не можете ли вы …?»</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Зуща бюхъанссарив?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас пригласили, но вы вынуждены отказать. Хотите сделать это вежливо.</div>
+      <div class="sit-task">Скажите «к сожалению, я не могу».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Багъишла бити, къабюхъанссар</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Хозяин дома открывает дверь и жестом приглашает войти нескольких гостей.</div>
+      <div class="sit-task">Скажите «входите» (форма для нескольких).</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Буххияра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">На вечеринке вы хотите позвать всех к столу.</div>
+      <div class="sit-task">Пригласите пройти за стол — скажите «проходите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите напомнить другу, что завтра ждёте его у себя.</div>
+      <div class="sit-task">Скажите «приходите к нам завтра».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Гьунтттий жучIан бухьхьийяра</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Ваш друг стоит в стороне. Вы хотите, чтобы его тоже пригласили.</div>
+      <div class="sit-task">Скажите «пригласите его».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ганайнгу оьвчара</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Подруга стоит в стороне. Вы хотите, чтобы её тоже позвали.</div>
+      <div class="sit-task">Скажите «пригласите её».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ганийнгу оьвчара</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Зал большой. Вы хотите пригласить собеседника пройти и сесть поближе.</div>
+      <div class="sit-task">Скажите сначала «проходите», потом «садитесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Буххи · ЩябикIи</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы видите, что другу скучно одному. Хотите позвать его с собой.</div>
+      <div class="sit-task">Скажите «пойдёмте со мной».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бачийра ттущал</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Компания друзей собирается в кафе. Вы предлагаете зайти.</div>
+      <div class="sit-task">Предложите зайти в кафе.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Кафелувун бухханну?</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите аккуратно предложить коллеге прогуляться после работы.</div>
+      <div class="sit-task">Спросите «не хотите ли вы погулять?»</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вин ччайвагу бакъарив? · Бачияра къатIуппай гьаннуча</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы пришли на мероприятие. Хотите вежливо попросить соседа немного сдвинуться, чтобы сесть рядом.</div>
+      <div class="sit-task">Скажите «подвиньтесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Тинмай хьийяра</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     СИТУАЦИИ — УРОК 5
+═══════════════════════════════════════ -->
+<h2 id="situations-prev">Ситуации из прошлого урока</h2>
+
+<div class="note">
+  Повторите ситуации из урока 5. Ключевые фразы скрыты — попробуйте вспомнить сами.
+</div>
+
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам помогли с трудным делом. Хотите поблагодарить.</div>
+      <div class="sit-task">Скажите «спасибо».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас поблагодарили. Вы хотите ответить.</div>
+      <div class="sit-task">Скажите «и вам спасибо».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вингу барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Друг очень помог в трудную минуту. Хотите поблагодарить от сердца.</div>
+      <div class="sit-task">Скажите «благодарю от всего сердца».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ДакIнихтуну барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас пригласили на праздник. Хотите поблагодарить за приглашение.</div>
+      <div class="sit-task">Скажите «спасибо за приглашение».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Оьвчаврийн барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — мужчина. Встретили старого друга и очень рады.</div>
+      <div class="sit-task">Скажите «как я рад».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На хъинну ххарину ура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы — женщина. Узнали приятную новость.</div>
+      <div class="sit-task">Скажите «как я рада».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На хъинну ххарину бура</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Собеседник сделал что-то приятное неожиданно.</div>
+      <div class="sit-task">Скажите «как приятно».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъинну тIааьнну бур</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пожелать другу счастья.</div>
+      <div class="sit-task">Скажите «счастья тебе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вин талихI булуннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вам угостили в гостях. Хотите поблагодарить.</div>
+      <div class="sit-task">Скажите «спасибо за угощение».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъамалушиндарайн барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Коллеги очень помогли вам с задачей. Хотите поблагодарить всех.</div>
+      <div class="sit-task">Скажите «вы очень помогли мне».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Зу ттун хъинну кумаг бунни</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вас поздравили с днём рождения. Хотите поблагодарить.</div>
+      <div class="sit-task">Скажите «спасибо за поздравление».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Барча баврийн барчаллагь</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пожелать человеку долгих лет жизни.</div>
+      <div class="sit-task">Скажите «долгих лет жизни».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Оьрму лахъи баннав</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Добрый человек сделал для вас что-то важное. Хотите сказать, что не забудете.</div>
+      <div class="sit-task">Скажите «я не забуду это».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На ва зат хъама къабитанна</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Вы хотите пожелать радости близкому человеку.</div>
+      <div class="sit-task">Скажите «радости тебе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ххаришиву вин</div>
+    </div>
+  </div>
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-ru">Всё идёт хорошо. Хотите выразить позитивную оценку.</div>
+      <div class="sit-task">Скажите «хорошо. Очень хорошо».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ххуйну. Хъинну ххуйну</div>
+    </div>
+  </div>
+
+</div>
+
+
+<footer>Лакский язык · Урок 6 · Разговорный клуб</footer>
+
+<script>
+function toggleCheck(btn) {
+  const row = btn.closest('tr');
+  btn.classList.toggle('checked');
+  row.classList.toggle('done', btn.classList.contains('checked'));
+  updateProgress();
+}
+
+function updateProgress() {
+  const vocabSection = document.getElementById('vocab');
+  const situationsSection = document.getElementById('situations');
+  let allBtns = [];
+  let node = vocabSection.nextElementSibling;
+  while (node && node !== situationsSection) {
+    allBtns = allBtns.concat(Array.from(node.querySelectorAll('.check-btn')));
+    node = node.nextElementSibling;
+  }
+  const checked = allBtns.filter(b => b.classList.contains('checked')).length;
+  const total = allBtns.length;
+  document.getElementById('vocab-total').textContent = total;
+  document.getElementById('vocab-count').innerHTML = 'Отмечено: ' + checked + ' из <span id="vocab-total">' + total + '</span>';
+  const pct = total ? Math.round(checked / total * 100) : 0;
+  document.getElementById('vocab-bar-fill').style.width = pct + '%';
+}
+
+function reveal(el) {
+  el.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', updateProgress);
+</script>
+
+</body>
+</html>
