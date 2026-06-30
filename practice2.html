@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лакский язык — Практическое занятие 2 — В гостях у Патимат</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; font-size: 16px; line-height: 1.7; color: #111; background: #fff; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 4px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 40px 0 4px; padding-bottom: 4px; border-bottom: 1px solid #ccc; }
+  h2 .scene-num { color: #b5622a; margin-right: 8px; }
+  h3 { font-size: 0.95rem; font-weight: bold; margin: 24px 0 8px; color: #333; }
+  p { margin-bottom: 10px; }
+  a { color: #0066cc; text-decoration: underline; cursor: pointer; }
+  .meta { font-size: 0.85rem; color: #555; margin-bottom: 32px; }
+  nav { margin-bottom: 36px; font-size: 0.9rem; line-height: 2.1; }
+  nav a { margin-right: 20px; }
+  .scene-intro { font-size: 0.9rem; color: #555; font-style: italic; margin: 0 0 16px; }
+
+  .note { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; font-size: 0.88rem; color: #444; margin: 16px 0; }
+  .note strong { color: #111; }
+
+  /* СЧЁТЧИК ПРОГРЕССА */
+  .vocab-progress { font-size: 0.82rem; color: #888; margin: 0 0 28px; display: flex; align-items: center; gap: 12px; }
+  .vocab-bar { flex: 1; height: 3px; background: #e8e8e8; }
+  .vocab-bar-fill { height: 100%; background: #b5622a; transition: width 0.3s ease; }
+
+  /* СИТУАЦИИ / РЕПЛИКИ ДИАЛОГА */
+  .situations { counter-reset: sit; }
+  .sit { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #e8e8e8; }
+  .sit:last-child { border-bottom: none; }
+  .sit-num { counter-increment: sit; font-size: 0.85rem; color: #999; min-width: 28px; padding-top: 2px; }
+  .sit-num::before { content: counter(sit); }
+  .sit-body { flex: 1; }
+  .sit-role { display: inline-block; font-size: 0.72rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; }
+  .sit-role.role-you { background: #fbe6d8; color: #b5622a; }
+  .sit-role.role-other { background: #e3edf5; color: #2b6ca3; }
+  .sit-ru { font-size: 0.95rem; color: #111; margin-bottom: 4px; }
+  .sit-task { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
+  .sit-hint { font-size: 0.82rem; color: #888; font-style: italic; }
+  .sit-key { font-size: 0.82rem; color: #0066cc; margin-top: 4px; cursor: pointer; }
+  .sit-key.hidden { color: transparent; background: #e8e8e8; border-radius: 2px; user-select: none; }
+  .sit-key.hidden::after { content: 'нажмите, чтобы показать'; color: #aaa; font-style: italic; font-size: 0.78rem; }
+
+  footer { margin-top: 60px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Лакский язык — Практическое занятие 2 · В гостях у Патимат</h1>
+<p class="meta">Ужин и разговор в семейном кругу · Разговорный клуб · Онлайн · Повторение материала уроков 1–6</p>
+
+<div class="note">
+  <strong>Как проходит занятие.</strong> В этом занятии два действующих лица: <strong>Вы</strong> — гость, и <strong>Патимат</strong> — хозяйка дома. Сцена разворачивается от встречи у дверей до прощания поздним вечером.
+  Реплики идут одна за другой, как настоящий разговор — читайте русское описание ситуации, попробуйте сказать фразу на лакском сами,
+  и только потом нажимайте на скрытую строку, чтобы проверить себя. Если реплика отмечена ролью собеседника — её произносит партнёр по диалогу,
+  а вы реагируете или слушаете. Меняйтесь ролями и проходите сцену ещё раз — это закрепляет лучше, чем чтение в одну сторону.
+  <strong>Цель — не идеальность, а свободная реакция.</strong>
+</div>
+
+<div class="note"><strong>Темы из всех 6 уроков:</strong> обращения к членам семьи (урок 1), приветствия (урок 2), прощание и пожелания на ночь (урок 3), просьбы за столом (урок 4), благодарность за угощение (урок 5), приглашение войти и сесть (урок 6).</div>
+
+<div class="vocab-progress">
+  <span id="vocab-count">Озвучено: 0 из <span id="vocab-total">50</span></span>
+  <div class="vocab-bar"><div class="vocab-bar-fill" id="vocab-bar-fill" style="width:0%"></div></div>
+</div>
+
+<nav>
+  <a href="#scene1">Сцена 1</a>
+  <a href="#scene2">Сцена 2</a>
+  <a href="#scene3">Сцена 3</a>
+  <a href="#scene4">Сцена 4</a>
+  <a href="#scene5">Сцена 5</a>
+</nav>
+
+
+<h2 id="scene1"><span class="scene-num">Сцена 1</span>Встреча у дверей</h2>
+<div class="scene-intro">Вас пригласили в гости. Хозяйка дома — Патимат — встречает вас у дверей.</div>
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат открывает дверь и приветствует вас — гостя-мужчину.</div>
+      <div class="sit-task">Произнесите приветствие гостю.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ивзрав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Ответьте традиционным приветствием.</div>
+      <div class="sit-task">Скажите «Ссалам аьлайкум».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ссалам аьлайкум</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат рада видеть вас в добром здравии.</div>
+      <div class="sit-task">Скажите «рада застать вас в здравии».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ххарира, ина цIуллу-сагъну лявкъуну</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Скажите, что вы тоже очень рады (говорите как мужчина).</div>
+      <div class="sit-task">Скажите «я очень рад».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъинну ххарину ура</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат приглашает вас войти.</div>
+      <div class="sit-task">Скажите «входите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ухху</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Вежливо попросите разрешения войти.</div>
+      <div class="sit-task">Скажите «разрешите мне войти».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Уххан ихтияр дула</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат предлагает пройти дальше в комнату.</div>
+      <div class="sit-task">Скажите «проходите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бухьхьи</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат показывает на место и предлагает сесть.</div>
+      <div class="sit-task">Скажите «садитесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ЩябикIи</div>
+    </div>
+  </div>
+</div>
+
+
+<h2 id="scene2"><span class="scene-num">Сцена 2</span>Знакомство с семьёй</h2>
+<div class="scene-intro">В доме собралась вся семья Патимат — пора знакомиться.</div>
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Вы вежливо обращаетесь к хозяйке — «уважаемая».</div>
+      <div class="sit-task">Обратитесь к Патимат уважительно.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ХIурмат бумур</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат знакомит вас со своим отцом.</div>
+      <div class="sit-task">Произнесите слово «отец», обращаясь к нему.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ппу</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Вы видите бабушку Патимат и хотите её поприветствовать.</div>
+      <div class="sit-task">Назовите её уважительно — «бабушка».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Мяммал дада</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат подзывает своих детей познакомиться с гостем.</div>
+      <div class="sit-task">Произнесите слово «дети».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ОьрчIру</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Вы неформально спрашиваете у её сына, как у него дела.</div>
+      <div class="sit-task">Спросите «как твои дела?» (неформально).</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вил иш цукун бур?</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Спросите Патимат о её семье в целом.</div>
+      <div class="sit-task">Спросите «как семья?».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Кулпат цукун бур?</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат отвечает, что дела неплохие.</div>
+      <div class="sit-task">Скажите «спасибо, неплохо».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Барчаллагь, оьккину бакъар</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Скажите, что вы очень рады этой встрече.</div>
+      <div class="sit-task">Скажите «мы тоже рады нашей встрече».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Жугу ххариру жула хьунабакъаврия</div>
+    </div>
+  </div>
+</div>
+
+
+<h2 id="scene3"><span class="scene-num">Сцена 3</span>За столом</h2>
+<div class="scene-intro">Стол накрыт, начинается ужин — и время для маленьких просьб.</div>
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Стол накрыт. Патимат приглашает пройти и сесть поближе.</div>
+      <div class="sit-task">Скажите «подойдите ближе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Шинай гъан хьу</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">За столом тесно — вежливо попросите соседа подвинуться.</div>
+      <div class="sit-task">Скажите «подвиньтесь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Тинмай хьийяра</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">У вас есть небольшая просьба к хозяйке.</div>
+      <div class="sit-task">Скажите «небольшая просьба».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ЧIивисса миннат</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Объясните: у вас просьба к ней.</div>
+      <div class="sit-task">Скажите «у меня к тебе просьба».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ттул вихь миннатри</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат с готовностью отвечает, что готова выслушать.</div>
+      <div class="sit-task">Скажите «скажите, если можно».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Бюхъарчан буси</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Попросите передать вам что-то за столом.</div>
+      <div class="sit-task">Скажите «дайте, пожалуйста».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Дула</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Вы не расслышали и вежливо просите повторить.</div>
+      <div class="sit-task">Скажите «повторите, если не трудно».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Гикрал ба захIмат къахьурча</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат с улыбкой переспрашивает, что вам нужно.</div>
+      <div class="sit-task">Спросите «можно спросить?».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">БучIирив цIуххин</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Попросите хозяйку о небольшой помощи.</div>
+      <div class="sit-task">Скажите «помогите».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Кумаг ба</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат говорит, что обязательно выполнит вашу просьбу.</div>
+      <div class="sit-task">Скажите «я выполню вашу просьбу».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На вил миннат щаллу буллай ура</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Поблагодарите её за помощь.</div>
+      <div class="sit-task">Скажите «спасибо за помощь».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Кумаграйн барчаллагь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат просит вас немного подождать, пока она принесёт ещё угощения.</div>
+      <div class="sit-task">Скажите «подождите немного».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ссавур да чансса</div>
+    </div>
+  </div>
+</div>
+
+
+<h2 id="scene4"><span class="scene-num">Сцена 4</span>Благодарность и пожелания</h2>
+<div class="scene-intro">Ужин закончен — самое время для тёплых слов.</div>
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Ужин был прекрасен. Поблагодарите за угощение.</div>
+      <div class="sit-task">Скажите «спасибо за угощение».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъамалушиндарайн барчаллагь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат отвечает «и вам спасибо».</div>
+      <div class="sit-task">Ответьте на благодарность.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вингу барчаллагь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Скажите «большое спасибо».</div>
+      <div class="sit-task">Скажите «большое спасибо».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вингу хъунмасса барчаллагь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Поблагодарите от всего сердца.</div>
+      <div class="sit-task">Скажите «благодарю от всего сердца».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ДакIнихтуну барчаллагь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат желает вам счастья.</div>
+      <div class="sit-task">Пожелайте счастья гостю.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вин талихI булуннав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Пожелайте ей удачи во всём в ответ.</div>
+      <div class="sit-task">Скажите «удачи во всём».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ТIайлабацIу баннав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат желает, чтобы исполнились ваши мечты.</div>
+      <div class="sit-task">Скажите «да сбудутся мечты».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Вил дакIнимур бартлаганнав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Скажите, что не забудете этот вечер.</div>
+      <div class="sit-task">Скажите «я не забуду это».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На ва зат хъама къабитанна</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат говорит «как приятно».</div>
+      <div class="sit-task">Скажите «как приятно».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хъинну тIааьнну бур</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Скажите, что вы очень рады (говорите как мужчина).</div>
+      <div class="sit-task">Скажите «как я рад».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">На хъинну ххарину ура</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат желает вам долгих лет жизни.</div>
+      <div class="sit-task">Скажите «долгих лет жизни».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Оьрму лахъи баннав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Пожелайте радости и ей тоже.</div>
+      <div class="sit-task">Скажите «радости тебе».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ххаришиву вин</div>
+    </div>
+  </div>
+</div>
+
+
+<h2 id="scene5"><span class="scene-num">Сцена 5</span>Прощание поздним вечером</h2>
+<div class="scene-intro">Уже поздно — пора прощаться с гостеприимной семьёй.</div>
+<div class="situations">
+
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Уже поздно. Скажите, что вам пора домой (говорите как мужчина).</div>
+      <div class="sit-task">Скажите «мне пора домой».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ттун шавай ачин чIун хъунни</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат желает вам счастливого пути.</div>
+      <div class="sit-task">Пожелайте счастливого пути.</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хьуллухъин, тIайлабацIу баннав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Попрощайтесь словом «до свидания».</div>
+      <div class="sit-task">Скажите «до свидания».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Цалсса</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат просит вас приходить ещё.</div>
+      <div class="sit-task">Скажите «приходите ещё к нам».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ттигу жучIан бухьхьияра</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Пообещайте писать письма.</div>
+      <div class="sit-task">Скажите «пишите нам письма».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">ЖучIан чагъар чичара</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат просит передать привет вашей супруге.</div>
+      <div class="sit-task">Скажите «передай привет жене».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Ссалам буси кулпатрахь</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Пожелайте Патимат и её семье здоровья.</div>
+      <div class="sit-task">Скажите «будьте здоровы».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">IЦуллушиву дулуннав</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-other">Патимат</div>
+      <div class="sit-ru">Патимат говорит «спокойной ночи».</div>
+      <div class="sit-task">Пожелайте «спокойной ночи».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хьхьурду хъинну</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Ответьте «спокойной ночи» в ответ.</div>
+      <div class="sit-task">Ответьте «спокойной ночи».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">КIюрхьил хъинну</div>
+    </div>
+  </div>
+  <div class="sit">
+    <div class="sit-num"></div>
+    <div class="sit-body">
+      <div class="sit-role role-you">Вы</div>
+      <div class="sit-ru">Уходя, скажите «всего хорошего».</div>
+      <div class="sit-task">Скажите «всего хорошего».</div>
+      <div class="sit-key hidden" onclick="reveal(this)">Хьуймур хъуннав</div>
+    </div>
+  </div>
+</div>
+
+
+<footer>Лакский язык · Практическое занятие 2 · Разговорный клуб · Повторение уроков 1–6</footer>
+
+<script>
+function reveal(el) {
+  el.classList.remove('hidden');
+  updateProgress();
+}
+function updateProgress() {
+  const allKeys = Array.from(document.querySelectorAll('.sit-key'));
+  const revealed = allKeys.filter(k => !k.classList.contains('hidden')).length;
+  const total = allKeys.length;
+  document.getElementById('vocab-total').textContent = total;
+  document.getElementById('vocab-count').innerHTML = 'Озвучено: ' + revealed + ' из <span id="vocab-total">' + total + '</span>';
+  const pct = total ? Math.round(revealed / total * 100) : 0;
+  document.getElementById('vocab-bar-fill').style.width = pct + '%';
+}
+document.addEventListener('DOMContentLoaded', updateProgress);
+</script>
+
+</body>
+</html>
